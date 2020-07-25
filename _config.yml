@@ -1,0 +1,8 @@
+theme: jekyll-theme-minimal
+
+title: Leet NZ
+description: Technology Research and Development
+
+logo: assets/logo.png
+show_downloads: false
+google_analytics: [Your Google Analytics tracking ID]
