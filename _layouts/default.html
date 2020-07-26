@@ -14,15 +14,37 @@
   <body>
     <div class="wrapper">
       <header>
-        <h1><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
         
+        <table style="width:100%">
+            <tr>
+                <th style="width:35%">
+                    <img class="logo" src="{{site.logo | relative_url}}" alt="Logo" />
+                </th>
+                <th>
+                    <div style="margin-left: 4px;">
+                        <h1><a href="{{ "/" | absolute_url }}">{{ site.title | default: site.github.repository_name }}</a></h1>
+                        <p>{{ site.description | default: site.github.project_tagline }}</p>
+                    </div>
+                </th>
+            </tr>
+        </table>
         {% if site.logo %}
-          <img src="{{site.logo | relative_url}}" alt="Logo" />
+          
         {% endif %}
 
-        <p>{{ site.description | default: site.github.project_tagline }}</p>
+        <h3>Software</h3>
+        <p>{{ site.software-languages }}</p>
+        <h3>Electronics</h3>
+        <p>{{ site.electronic-disciplines }}</p>
+        <h3>System Modelling and Control</h3>
+        <p>{{ site.modelling-disciplines }}</p>
 
-        <p class="view"></p><a href="https://www.linkedin.com/in/hoanibryson">Contact</a></p>
+        <h2>Contact</h2>
+
+        <ul class="display">
+            <li><a href="{{ site.linkedin }}">linkedin</a></li>
+            <li><a href="{{ site.email }}">email</a></li>
+        </ul>
 
         {% if site.show_downloads %}
         <ul class="downloads">
