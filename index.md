@@ -6,7 +6,7 @@ I have a pretty strange work history spanning from blockchain software through t
 
 Leet is my consulting company which I have estabished to start helping companies with thier technical challenges on demand.
 
-I pride myself in keeping up to date with engineering best practices and using cross-disciplinary approaches to deliver high-quality, on-time, and solves the right problem.
+I pride myself in keeping up to date with engineering best practices and using cross-disciplinary approaches to deliver high-quality solutions.
 
 ### Design Approaches
 
@@ -18,6 +18,6 @@ A focus on reducing defects and saving time by conforming to popular style guide
 
 Full design lifecycle services from prototype through to optimization for deployment/manufacturing.
 
-#### Leveraging Really Hard Maths (a.k.a algebra and calculus).
+#### Leveraging Really Hard Maths (a.k.a algebra and calculus)
 
 Using simulation and control theory to develop products faster and better.
