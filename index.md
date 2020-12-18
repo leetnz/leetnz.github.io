@@ -4,7 +4,7 @@ Hey, Hoani here.
 
 I have a pretty strange work history spanning from blockchain software through to rocket avoinic systems.
 
-Leet is my consulting company which I have estabished to start helping companies with thier technical challenges on demand.
+Leetware is my consulting company which I have estabished to start helping companies with thier technical challenges on demand.
 
 I pride myself in keeping up to date with engineering best practices and using cross-disciplinary approaches to deliver high-quality solutions.
 
