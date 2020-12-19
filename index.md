@@ -1,23 +1,19 @@
 # About
 
-Hey, Hoani here.
+Leetware is a technology consulting company estabished to start help companies with cutting edge technical challenges.
 
-I have a pretty strange work history spanning from blockchain software through to rocket avoinic systems.
-
-Leetware is my consulting company which I have estabished to start helping companies with thier technical challenges on demand.
-
-I pride myself in keeping up to date with engineering best practices and using cross-disciplinary approaches to deliver high-quality solutions.
+New Zealand has a beautiful mix of creative thinkers and a practical work ethic for getting things done. Leetware demonstrates the next level of development with a focus on design quality and productivity to accelerate our clients in New Zealand's tech industry.
 
 ### Design Approaches
 
-#### Inspired by Agile and Software Productivity Research
+#### Guided by Agile and Software Productivity Research
 
-A focus on reducing defects and saving time by conforming to popular style guidelines, linting, test driven development and CI/CD.
+A focus on reducing defects and saving time by leveraging popular style guidelines, linting, test driven development and CI/CD.
 
-#### Practical Industry-based Experience
+#### Industry Battle-Tested Experience
 
-Full design lifecycle services from prototype through to optimization for deployment/manufacturing.
+Leetware's experience comes from New Zealand's most demanding and exciting technology projects. We offer services throughout the entire design lifecycle from prototype through to deployment/manufacturing.
 
-#### Leveraging Really Hard Maths (a.k.a algebra and calculus)
+#### We Do Hard Math
 
-Using simulation and control theory to develop products faster and better.
+Balancing research and development, Leetware leverages simulation and control theory to develop products faster and better.
