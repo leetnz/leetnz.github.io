@@ -2,7 +2,7 @@
 
 Leetware is a technology consulting company estabished to help companies with cutting edge technical challenges.
 
-New Zealand has a beautiful mix of creative thinkers and a practical work ethic for getting things done. Leetware demonstrates the next level of development with a focus on design quality and productivity to accelerate our clients in New Zealand's tech industry.
+New Zealand is a beautiful mix of creative thinkers and a culture for getting things done. Leetware demonstrates the next level of development with a focus on design quality and productivity to accelerate our clients in New Zealand's tech industry.
 
 ### Design Approaches
 
