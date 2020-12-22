@@ -7,9 +7,9 @@ logo: assets/Logo.png
 show_downloads: false
 google_analytics: [Your Google Analytics tracking ID]
 
-software-languages: Embedded C, C++, Python, Javascript, Golang and Rust.
-electronic-disciplines: Power Electronics, Embedded Systems, Sensors, and Avionics.
-modelling-disciplines: Orbital Mechanics, Aerodynamics, Thermal, Electronic and Mechanical Systems.
+software-languages: embedded C, C++, Python, Javascript, Golang, and Rust.
+electronic-disciplines: power electronics, embedded systems, sensors, and avionics.
+modelling-disciplines: orbital mechanics, aerodynamics, thermal, electronic, and mechanical systems.
 
 linkedin: https://www.linkedin.com/in/hoanibryson
 email: hoani.bryson@leetware.co.nz
