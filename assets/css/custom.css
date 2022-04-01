@@ -1,0 +1,45 @@
+img.logo {
+  float: left;
+  max-width: 100px;
+}
+
+header p {
+  margin: 0px;
+  text-align: justify;
+}
+
+header p.subtitle {
+  text-align: left;
+}
+
+header th,
+td {
+  padding: 5px 10px 20px;
+}
+
+header h2,
+h3 {
+  margin: 20px 0 20px;
+}
+
+header h1 {
+  font-size: 26px;
+  line-height: 0.2;
+}
+
+header ul {
+  padding: 0;
+  padding-left: 2em;
+  width: 270px;
+}
+
+header ul a:active {
+  background-color: #f0f0f0;
+}
+
+body {
+  background-image: url("/assets/bglogo.png"), url("/assets/bg.png");
+  background-attachment: fixed, fixed;
+  background-position: left bottom, left bottom;
+  background-repeat: no-repeat, repeat;
+}

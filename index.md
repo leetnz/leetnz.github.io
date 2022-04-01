@@ -1,19 +1,22 @@
-# About
+## Expertise
 
-Leetware is a technology consulting company which tackles cutting edge technical challenges.
+* Software systems
+* Embedded systems
+* Robotics and control
 
-Capitalising on New Zealand's (beautiful) culture of creative thinking and getting things done, Leetware is fast building a reputation for next-level development with a core focus on design quality and productivity.
+## Services
 
-### Design approaches
+Our current clients need help with:
+* predictable and high quality software delivery
+* addressing technical debt
+* improving the quality and flexibility of existing systems
 
-#### Guided by Agile and software productivity research
+## Approach
+
+### Guided by Agile and software productivity research
 
 We focus on reducing defects and saving time by leveraging popular style guidelines, linting, test driven development, and CI/CD.
 
-#### Battle-tested industry experience
+### Battle-tested industry experience
 
 We work on New Zealand's most demanding and exciting technology projects and offer services throughout the entire design lifecycle - from prototype to deployment/manufacturing.
-
-#### We do hard math
-
-Balancing research and development, Leetware leverages simulation and control theory to develop products faster and better.
