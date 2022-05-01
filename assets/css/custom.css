@@ -42,4 +42,5 @@ body {
   background-attachment: fixed, fixed;
   background-position: left bottom, left bottom;
   background-repeat: no-repeat, repeat;
+  overflow-x: hidden;
 }
