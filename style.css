@@ -4,6 +4,19 @@
     --bg-primary: #23232e;
     --bg-secondary: #141418;
     --transition-speed: 1000ms;
+
+    --skyg1: #0a0f5c;
+    --skyg2: #40005c;
+    --waterg1: #302040;
+    --waterg2: #101239;
+    --reflection: #4244df;
+    --city0-line: #ccf4ff;
+    --city0-fill: #55aaff;
+    --city1-line: #88ccee;
+    --city1-fill: #5555cc;
+    --city2-line: #8888ff;
+    --city2-fill: #6615a8;
+    --city3-fill: #241a4a;
 }
 
 html {

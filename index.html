@@ -11,46 +11,19 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
-    <script src="https://cdn.jsdelivr.net/npm/kute.js@2.2.2/dist/kute.min.js"
-        integrity="sha256-B/f4sxh5Z2Cm4ampEByxvbOCINmpxPkM43pR1PIwagk=" crossorigin="anonymous"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/kute.js@2.2.2/dist/kute.min.js"
+        integrity="sha256-B/f4sxh5Z2Cm4ampEByxvbOCINmpxPkM43pR1PIwagk=" crossorigin="anonymous" onload="startKute();">
+        </script>
 
     <script>
-        const cityColors = {
-            night: {
-                skyg1: '#0a0f5c',
-                skyg2: '#40005c',
-                waterg1: '#302040',
-                waterg2: '#101239',
-                reflection: '#4244df',
-                city0Line: '#ccf4ff',
-                city0Fill: '#55aaff',
-                city1Line: '#88ccee',
-                city1Fill: '#5555cc',
-                city2Line: '#8888ff',
-                city2Fill: '#6615a8',
-                city3Fill: '#241a4a',
-            },
-        };
-
-        var r = document.querySelector(':root');
-
-        function setCityColor(key) {
-            r.style.setProperty('--skyg1', cityColors[key].skyg1);
-            r.style.setProperty('--skyg2', cityColors[key].skyg2);
-            r.style.setProperty('--waterg1', cityColors[key].waterg1);
-            r.style.setProperty('--waterg2', cityColors[key].waterg2);
-            r.style.setProperty('--reflection', cityColors[key].reflection);
-            r.style.setProperty('--city0-line', cityColors[key].city0Line);
-            r.style.setProperty('--city0-fill', cityColors[key].city0Fill);
-            r.style.setProperty('--city1-line', cityColors[key].city1Line);
-            r.style.setProperty('--city1-fill', cityColors[key].city1Fill);
-            r.style.setProperty('--city2-line', cityColors[key].city2Line);
-            r.style.setProperty('--city2-fill', cityColors[key].city2Fill);
-            r.style.setProperty('--city3-fill', cityColors[key].city3Fill);
+        var kuteRegistry = [];
+        function registerKute(cb) {
+            kuteRegistry.push(cb);
         }
-
-        setCityColor("night");
-
+        function startKute() {
+            console.log("starting kute");
+            kuteRegistry.forEach((cb) => cb());
+        }
     </script>
 
     <style>
@@ -430,7 +403,7 @@
                     <script>
                         const sky = document.getElementById("city-stars");
                         var protoStar = document.getElementById("sky-star");
-                        var twinkles = [];
+                        var stars = [];
                         for (var i = 0; i < 5; i++) {
                             for (var j = 0; j < 5; j++) {
                                 var size = 0.5 + Math.random() * 1.5;
@@ -445,25 +418,29 @@
 
                                 sky.appendChild(star);
 
-                                twinkles.push(KUTE.fromTo(star,
+                                stars.push(star);
+                            }
+                        }
+
+                        registerKute(() => {
+                            stars.forEach((star) => {
+                                var twinkle;
+                                twinkle = KUTE.fromTo(star,
                                     { opacity: 0.5 },
                                     { opacity: 1 },
                                     {
                                         yoyo: true,
                                         repeat: 1,
                                         duration: 1000,
-                                        onComplete: doTwinkle,
+                                        onComplete: () => {
+                                            setTimeout(() => {
+                                                twinkle.start();
+                                            }, 2000 + Math.random() * 10000);
+                                        },
                                     },
-                                ));
-                                const index = twinkles.length - 1;
-                                var doTwinkle = function () {
-                                    setTimeout(() => {
-                                        twinkles[index].start();
-                                    }, 2000 + Math.random() * 10000);
-                                }
-                                twinkles[index].start();
-                            }
-                        }
+                                ).start();
+                            });
+                        });
 
                     </script>
                 </div>
@@ -508,20 +485,22 @@
                 </svg>
 
                 <script>
-                    var layer2Tween = KUTE.fromTo("#layer2", { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" });
-                    layer2Tween.start();
+                    registerKute(() => {
+                        var layer2Tween = KUTE.fromTo("#layer2", { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" });
+                        layer2Tween.start();
 
-                    document.getElementById('city-layer2').addEventListener("mouseover", function (event) {
-                        if (!layer2Tween.playing) {
-                            console.log("starting")
-                            var xPercent = event.pageX / window.innerWidth;
-                            var dir = (xPercent > 0.50) ? 1 : -1;
-                            var start1 = 30 - 90 * event.pageX / window.innerWidth - 5;
-                            var start2 = start1 + 10.0;
-                            layer2Tween = KUTE.fromTo("#layer2", { draw: `${start1}% ${start2}%` }, { draw: `${start1 + dir * 120}% ${start1 + dir * 120}%` }, { duration: 2500, easing: "easingCubicOut" });
-                            layer2Tween.start()
-                        }
-                    }, false);
+                        document.getElementById('city-layer2').addEventListener("mouseover", function (event) {
+                            if (!layer2Tween.playing) {
+                                console.log("starting")
+                                var xPercent = event.pageX / window.innerWidth;
+                                var dir = (xPercent > 0.50) ? 1 : -1;
+                                var start1 = 30 - 90 * event.pageX / window.innerWidth - 5;
+                                var start2 = start1 + 10.0;
+                                layer2Tween = KUTE.fromTo("#layer2", { draw: `${start1}% ${start2}%` }, { draw: `${start1 + dir * 120}% ${start1 + dir * 120}%` }, { duration: 2500, easing: "easingCubicOut" });
+                                layer2Tween.start()
+                            }
+                        }, false);
+                    });
                 </script>
 
 
@@ -534,19 +513,21 @@
                 </svg>
 
                 <script>
-                    var layer1Tween = KUTE.fromTo("#layer1", { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" });
-                    layer1Tween.start();
+                    registerKute(() => {
+                        var layer1Tween = KUTE.fromTo("#layer1", { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" });
+                        layer1Tween.start();
 
-                    document.getElementById('city-layer1').addEventListener("mouseover", function (event) {
-                        if (!layer1Tween.playing) {
-                            var xPercent = event.pageX / window.innerWidth;
-                            var dir = (xPercent > 0.50) ? 1 : -1;
-                            var start1 = 50 - 80 * event.pageX / window.innerWidth - 5;
-                            var start2 = start1 + 10.0;
-                            layer1Tween = KUTE.fromTo("#layer1", { draw: `${start1}% ${start2}%` }, { draw: `${start1 + dir * 120}% ${start1 + dir * 120}%` }, { duration: 1500, easing: "easingCubicOut" });
-                            layer1Tween.start()
-                        }
-                    }, false);
+                        document.getElementById('city-layer1').addEventListener("mouseover", function (event) {
+                            if (!layer1Tween.playing) {
+                                var xPercent = event.pageX / window.innerWidth;
+                                var dir = (xPercent > 0.50) ? 1 : -1;
+                                var start1 = 50 - 80 * event.pageX / window.innerWidth - 5;
+                                var start2 = start1 + 10.0;
+                                layer1Tween = KUTE.fromTo("#layer1", { draw: `${start1}% ${start2}%` }, { draw: `${start1 + dir * 120}% ${start1 + dir * 120}%` }, { duration: 1500, easing: "easingCubicOut" });
+                                layer1Tween.start()
+                            }
+                        }, false);
+                    });
                 </script>
 
                 <svg class="city-spacer" id="city-layer0" version="1.1" viewBox="0 0 776.25 419.16" xml:space="preserve"
@@ -595,23 +576,25 @@
                 </svg>
 
                 <script>
-                    const numBuildings = 17;
-                    var layer0Tweens = [];
-                    for (let i = 0; i < numBuildings; i++) {
-                        const id = `city-layer0_${i}`;
-                        layer0Tweens.push(KUTE.fromTo(`#${id}`, { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" }));
-                        layer0Tweens[i].start();
+                    registerKute(() => {
+                        const numBuildings = 17;
+                        var layer0Tweens = [];
+                        for (let i = 0; i < numBuildings; i++) {
+                            const id = `city-layer0_${i}`;
+                            layer0Tweens.push(KUTE.fromTo(`#${id}`, { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" }));
+                            layer0Tweens[i].start();
 
-                        document.getElementById(id).addEventListener("mouseover", function (event) {
-                            const xPercent = event.pageX / window.innerWidth;
-                            const dir = (xPercent > 0.50) ? 1 : -1;
+                            document.getElementById(id).addEventListener("mouseover", function (event) {
+                                const xPercent = event.pageX / window.innerWidth;
+                                const dir = (xPercent > 0.50) ? 1 : -1;
 
-                            if (!layer0Tweens[i].playing) {
-                                layer0Tweens[i] = KUTE.fromTo(`#${id}`, { draw: `${-10 + dir * 40}% ${10 + dir * 40}%` }, { draw: `${dir * 140}% ${dir * 140}%` }, { duration: 1000, offset: 20, easing: "easingCubicOut" });
-                                layer0Tweens[i].start()
-                            }
-                        }, false);
-                    } 
+                                if (!layer0Tweens[i].playing) {
+                                    layer0Tweens[i] = KUTE.fromTo(`#${id}`, { draw: `${-10 + dir * 40}% ${10 + dir * 40}%` }, { draw: `${dir * 140}% ${dir * 140}%` }, { duration: 1000, offset: 20, easing: "easingCubicOut" });
+                                    layer0Tweens[i].start()
+                                }
+                            }, false);
+                        }
+                    });
                 </script>
             </div>
 
@@ -808,71 +791,73 @@
                 </div>
 
                 <script>
-                    const maclogo = document.getElementById("maclogo");
-                    var xspeed = 4;
-                    var yspeed = 3;
-                    var xpos = Math.floor(Math.random() * 10) * xspeed;
-                    var ypos = Math.floor(Math.random() * 5) * yspeed;
+                    registerKute(() => {
+                        const maclogo = document.getElementById("maclogo");
+                        var xspeed = 4;
+                        var yspeed = 3;
+                        var xpos = Math.floor(Math.random() * 10) * xspeed;
+                        var ypos = Math.floor(Math.random() * 5) * yspeed;
 
-                    var angle = 0;
-                    const logos = ["logo-cpp", "logo-go", "logo-rust", "logo-flutter", "logo-py"];
-                    var logoIndex = 0;
+                        var angle = 0;
+                        const logos = ["logo-cpp", "logo-go", "logo-rust", "logo-flutter", "logo-py"];
+                        var logoIndex = 0;
 
-                    function switchLogo() {
-                        var current = document.getElementById(logos[logoIndex]);
-                        logoIndex = (logoIndex + 1 + Math.floor(Math.random() * (logos.length - 2))) % logos.length;
-                        angle += 180;
-                        KUTE.to(current, { rotate: angle }, {
-                            duration: 100,
-                            easing: "easingCubicIn",
-                            onComplete: () => {
-                                current.style.visibility = "hidden";
-                                var next = document.getElementById(logos[logoIndex]);
-                                next.style.visibility = "visible";
-                                angle += 180;
-                                KUTE.to(next, { rotate: angle }, { duration: 100, easing: "easingCubicOut" }).start()
-                            }
-                        }).start();
-                    }
-
-                    var moveTween = KUTE.to("#maclogo",
-                        { scale: 1 },
-                        { duration: 1, onComplete: updatePos }
-                    ).start();
-
-                    const colors = ["#fa8", "#ee4", "#4f4", "#0ff", "#bcf", "#f8f"];
-                    var colorIndex = 0;
-                    maclogo.style.stroke = colors[colorIndex];
-
-                    function updatePos() {
-                        const xoffset = -52;
-                        const yoffset = -120;
-
-                        var bounce = false;
-
-                        if ((xspeed > 0 && xpos > 576) || (xspeed < 0 && xpos < 0)) {
-                            xspeed = -xspeed;
-                            bounce = true;
-                        }
-                        if ((yspeed > 0 && ypos > 280) || (yspeed < 0 && ypos < 0)) {
-                            yspeed = -yspeed;
-                            bounce = true;
-                        }
-                        xpos += xspeed;
-                        ypos += yspeed;
-
-                        if (bounce) {
-                            switchLogo();
-                            colorIndex = (colorIndex + 1) % colors.length;
-                            maclogo.style.stroke = colors[colorIndex];
+                        function switchLogo() {
+                            var current = document.getElementById(logos[logoIndex]);
+                            logoIndex = (logoIndex + 1 + Math.floor(Math.random() * (logos.length - 2))) % logos.length;
+                            angle += 180;
+                            KUTE.to(current, { rotate: angle }, {
+                                duration: 100,
+                                easing: "easingCubicIn",
+                                onComplete: () => {
+                                    current.style.visibility = "hidden";
+                                    var next = document.getElementById(logos[logoIndex]);
+                                    next.style.visibility = "visible";
+                                    angle += 180;
+                                    KUTE.to(next, { rotate: angle }, { duration: 100, easing: "easingCubicOut" }).start()
+                                }
+                            }).start();
                         }
 
-
-                        moveTween = KUTE.to("#maclogo",
-                            { translateX: xoffset + xpos, translateY: yoffset + ypos, scale: 1 },
-                            { duration: 30, onComplete: updatePos }
+                        var moveTween = KUTE.to("#maclogo",
+                            { scale: 1 },
+                            { duration: 1, onComplete: updatePos }
                         ).start();
-                    }
+
+                        const colors = ["#fa8", "#ee4", "#4f4", "#0ff", "#bcf", "#f8f"];
+                        var colorIndex = 0;
+                        maclogo.style.stroke = colors[colorIndex];
+
+                        function updatePos() {
+                            const xoffset = -52;
+                            const yoffset = -120;
+
+                            var bounce = false;
+
+                            if ((xspeed > 0 && xpos > 576) || (xspeed < 0 && xpos < 0)) {
+                                xspeed = -xspeed;
+                                bounce = true;
+                            }
+                            if ((yspeed > 0 && ypos > 280) || (yspeed < 0 && ypos < 0)) {
+                                yspeed = -yspeed;
+                                bounce = true;
+                            }
+                            xpos += xspeed;
+                            ypos += yspeed;
+
+                            if (bounce) {
+                                switchLogo();
+                                colorIndex = (colorIndex + 1) % colors.length;
+                                maclogo.style.stroke = colors[colorIndex];
+                            }
+
+
+                            moveTween = KUTE.to("#maclogo",
+                                { translateX: xoffset + xpos, translateY: yoffset + ypos, scale: 1 },
+                                { duration: 30, onComplete: updatePos }
+                            ).start();
+                        }
+                    });
                 </script>
 
                 <h2 class="text-in-right"
@@ -1052,58 +1037,60 @@
 
 
                 <script>
-                    const pcbInfo = [
-                        { id: "#pcb-base", x: 0, y: 0, offx: 0, offy: 30 },
-                        { id: "#pcb-c1", x: -85.568, y: -21.5, offx: -20, offy: -40 },
-                        { id: "#pcb-ec1", x: -288.22, y: - 20.5, offx: 0, offy: -38 },
-                        { id: "#pcb-j1", x: -11, y: 58.5, offx: 30, offy: -40 },
-                        { id: "#pcb-u1", x: 8.8, y: 2, offx: -17, offy: -65 },
-                        { id: "#pcb-uc", x: -210, y: 14, offx: 0, offy: -92 },
-                        { id: "#pcb-c2", x: -20, y: 19, offx: 0, offy: -95 },
-                        { id: "#pcb-c3", x: -12, y: 24, offx: 0, offy: -110 },
-                        { id: "#pcb-r1", x: -19, y: - 8, offx: 0, offy: -90 },
-                        { id: "#pcb-r2", x: 73, y: 8, offx: 10, offy: -110 },
-                        { id: "#pcb-r3", x: -5.9, y: 15.5, offx: -5, offy: -95 },
-                        { id: "#pcb-j2", x: -208.5, y: 53.5, offx: -30, offy: -110 },
-                    ];
-                    pcbInfo.forEach((c) => {
-                        KUTE.to(c.id,
-                            { translateX: c.x + c.offx, translateY: c.y + c.offy },
-                            { duration: 1 }
-                        ).start();
-                    });
+                    registerKute(() => {
+                        const pcbInfo = [
+                            { id: "#pcb-base", x: 0, y: 0, offx: 0, offy: 30 },
+                            { id: "#pcb-c1", x: -85.568, y: -21.5, offx: -20, offy: -40 },
+                            { id: "#pcb-ec1", x: -288.22, y: - 20.5, offx: 0, offy: -38 },
+                            { id: "#pcb-j1", x: -11, y: 58.5, offx: 30, offy: -40 },
+                            { id: "#pcb-u1", x: 8.8, y: 2, offx: -17, offy: -65 },
+                            { id: "#pcb-uc", x: -210, y: 14, offx: 0, offy: -92 },
+                            { id: "#pcb-c2", x: -20, y: 19, offx: 0, offy: -95 },
+                            { id: "#pcb-c3", x: -12, y: 24, offx: 0, offy: -110 },
+                            { id: "#pcb-r1", x: -19, y: - 8, offx: 0, offy: -90 },
+                            { id: "#pcb-r2", x: 73, y: 8, offx: 10, offy: -110 },
+                            { id: "#pcb-r3", x: -5.9, y: 15.5, offx: -5, offy: -95 },
+                            { id: "#pcb-j2", x: -208.5, y: 53.5, offx: -30, offy: -110 },
+                        ];
+                        pcbInfo.forEach((c) => {
+                            KUTE.to(c.id,
+                                { translateX: c.x + c.offx, translateY: c.y + c.offy },
+                                { duration: 1 }
+                            ).start();
+                        });
 
-                    var pcbRect = document.getElementById("pcb").getBoundingClientRect();
-                    function registerPCBScroll() {
-                        if (window.scrollY + screen.height > pcbRect.bottom) {
-                            console.log("Hello");
-                            document.removeEventListener('scroll', registerPCBScroll);
-                            var firstTween;
-                            var lastTween;
-                            var nextTween;
-                            pcbInfo.forEach((c) => {
-                                if (c.id === "#pcb-base") {
-                                    return;
-                                }
-                                nextTween = KUTE.to(c.id,
-                                    { translateX: c.x, translateY: c.y },
-                                    { duration: 500, easing: 'easingCubicOut' });
-                                if (firstTween) {
-                                    lastTween.chain(nextTween);
-                                    lastTween = nextTween;
-                                } else {
-                                    firstTween = nextTween;
-                                    lastTween = nextTween;
-                                }
-                            });
-                            nextTween = KUTE.to("#pcb-base",
-                                { translateX: 0, translateY: 0 },
-                                { duration: 1000, easing: 'easingCubicOut' });
-                            lastTween.chain(nextTween);
-                            firstTween.start();
+                        var pcbRect = document.getElementById("pcb").getBoundingClientRect();
+                        function registerPCBScroll() {
+                            if (window.scrollY + screen.height > pcbRect.bottom) {
+                                console.log("Hello");
+                                document.removeEventListener('scroll', registerPCBScroll);
+                                var firstTween;
+                                var lastTween;
+                                var nextTween;
+                                pcbInfo.forEach((c) => {
+                                    if (c.id === "#pcb-base") {
+                                        return;
+                                    }
+                                    nextTween = KUTE.to(c.id,
+                                        { translateX: c.x, translateY: c.y },
+                                        { duration: 500, easing: 'easingCubicOut' });
+                                    if (firstTween) {
+                                        lastTween.chain(nextTween);
+                                        lastTween = nextTween;
+                                    } else {
+                                        firstTween = nextTween;
+                                        lastTween = nextTween;
+                                    }
+                                });
+                                nextTween = KUTE.to("#pcb-base",
+                                    { translateX: 0, translateY: 0 },
+                                    { duration: 1000, easing: 'easingCubicOut' });
+                                lastTween.chain(nextTween);
+                                firstTween.start();
+                            }
                         }
-                    }
-                    document.addEventListener('scroll', registerPCBScroll, { passive: true });
+                        document.addEventListener('scroll', registerPCBScroll, { passive: true });
+                    });
                 </script>
 
                 <h2 class="text-in-left" style="margin: 0; margin-top: 1vw; margin-left: 5vw">
