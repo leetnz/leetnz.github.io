@@ -1,0 +1,1380 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get the best - Leetware</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/kute.js@2.2.2/dist/kute.min.js"
+        integrity="sha256-B/f4sxh5Z2Cm4ampEByxvbOCINmpxPkM43pR1PIwagk=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.css"
+        integrity="sha384-KiWOvVjnN8qwAZbuQyWDIbfCLFhLXNETzBQjA/92pIowpC0d2O3nppDGQVgwd2nB" crossorigin="anonymous">
+
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.15.3/dist/katex.min.js"
+        integrity="sha384-0fdwu/T/EQMsQlrHCCHoH10pkPLlKA1jL5dFyUOvB3lfeT2540/2g6YgSi2BL14p"
+        crossorigin="anonymous"></script>
+
+    <script>
+        const cityColors = {
+            night: {
+                skyg1: '#0a0f5c',
+                skyg2: '#40005c',
+                waterg1: '#302040',
+                waterg2: '#101239',
+                reflection: '#4244df',
+                city0Line: '#ccf4ff',
+                city0Fill: '#55aaff',
+                city1Line: '#88ccee',
+                city1Fill: '#5555cc',
+                city2Line: '#8888ff',
+                city2Fill: '#6615a8',
+                city3Fill: '#241a4a',
+            },
+        };
+
+        var r = document.querySelector(':root');
+
+        function setCityColor(key) {
+            r.style.setProperty('--skyg1', cityColors[key].skyg1);
+            r.style.setProperty('--skyg2', cityColors[key].skyg2);
+            r.style.setProperty('--waterg1', cityColors[key].waterg1);
+            r.style.setProperty('--waterg2', cityColors[key].waterg2);
+            r.style.setProperty('--reflection', cityColors[key].reflection);
+            r.style.setProperty('--city0-line', cityColors[key].city0Line);
+            r.style.setProperty('--city0-fill', cityColors[key].city0Fill);
+            r.style.setProperty('--city1-line', cityColors[key].city1Line);
+            r.style.setProperty('--city1-fill', cityColors[key].city1Fill);
+            r.style.setProperty('--city2-line', cityColors[key].city2Line);
+            r.style.setProperty('--city2-fill', cityColors[key].city2Fill);
+            r.style.setProperty('--city3-fill', cityColors[key].city3Fill);
+        }
+
+        setCityColor("night");
+
+    </script>
+
+    <style>
+        h1 {
+            text-shadow: -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333;
+            z-index: 1;
+        }
+
+        h2 {
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            z-index: 1;
+        }
+
+
+        p {
+            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
+            z-index: 1;
+        }
+
+        a,
+        a:visited {
+            color: #aabbff;
+            text-decoration: none;
+        }
+
+        a:hover {
+            color: #d0d0ff;
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .left-in-animation {
+                animation-name: left-enter;
+                animation-duration: 1s;
+                animation-iteration-count: 1;
+            }
+        }
+
+        @keyframes left-enter {
+            0% {
+                transform: scale(0, .025);
+                transform: translateX(-100vw);
+            }
+
+            50% {
+                transform: scale(1, .025);
+                transform: translateX(0);
+            }
+        }
+
+        @media (prefers-reduced-motion: no-preference) {
+            .right-in-animation {
+                animation-name: right-enter;
+                animation-duration: 1s;
+                animation-iteration-count: 1;
+            }
+        }
+
+        @keyframes right-enter {
+            0% {
+                transform: scale(0, .025);
+                transform: translateX(100vw);
+            }
+
+            50% {
+                transform: scale(1, .025);
+                transform: translateX(0);
+            }
+        }
+
+
+
+        @media (prefers-reduced-motion: no-preference) {
+            .square-animation {
+                animation-name: wipe-enter;
+                animation-duration: 1s;
+                animation-iteration-count: 1;
+            }
+        }
+
+        @keyframes wipe-enter {
+            0% {
+                transform: scale(0, .025);
+            }
+
+            50% {
+                transform: scale(1, .025);
+            }
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            color: white;
+            background: #000;
+            overflow-x: hidden;
+        }
+
+        section {
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-x: hidden;
+        }
+
+
+
+
+
+        .services {
+            position: relative;
+            margin-top: -6vw;
+            width: 100%;
+            padding-bottom: 8vw;
+        }
+
+        .services::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            background-image: url("assets/services.jpg");
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: brightness(0.25);
+            z-index: -1;
+        }
+
+        .about {
+            position: relative;
+            margin-top: -8vw;
+            width: 100%;
+        }
+
+        .about::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            min-width: 100%;
+            min-height: 100%;
+            background-image: url("assets/about.jpg");
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            filter: brightness(0.45);
+            z-index: -5;
+        }
+
+        .water {
+            background: var(--waterg2);
+            overflow-y: hidden;
+            min-height: 100vh;
+            height: 65vw;
+        }
+
+        .city {
+            position: absolute;
+            top: 0;
+            aspect-ratio: 776.25/419.16;
+            pointer-events: none;
+            /* width: 100%; */
+            height: 100%;
+            /* height: 54vw; */
+            /* padding-top: 5%; */
+        }
+
+        .city-spacer {
+            position: absolute;
+            /* display: block; */
+            aspect-ratio: 776.25/419.16;
+            height: 100%;
+
+            background-repeat: no-repeat;
+            background-position-x: center;
+            background-position-y: bottom;
+            background-size: cover;
+            background-attachment: fixed;
+        }
+
+
+        #city-sky {
+            position: absolute;
+            top: 0;
+
+            width: 100%;
+            height: 61%;
+            background: var(--skyg1);
+            /* Old browsers */
+            background: -moz-linear-gradient(180deg, var(--skyg1) 0%, var(--skyg2) 90%);
+            /* FF3.6-15 */
+            background: -webkit-linear-gradient(180deg, var(--skyg1) 0%, var(--skyg2) 90%);
+            /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(180deg, var(--skyg1) 0%, var(--skyg2) 90%);
+
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=var(--skyg1), endColorstr=var(--skyg2), GradientType=0);
+            /* IE6-9 */
+            overflow: hidden;
+        }
+
+        #city-water {
+            position: absolute;
+            bottom: 0;
+
+            width: 100%;
+            height: 39%;
+            background: var(--waterg2);
+            /* Old browsers */
+            background: -moz-linear-gradient(-180deg, var(--waterg1) 0%, var(--waterg2) 100%);
+            /* FF3.6-15 */
+            background: -webkit-linear-gradient(-180deg, var(--waterg1) 0%, var(--waterg2) 100%);
+            /* Chrome10-25,Safari5.1-6 */
+            background: linear-gradient(-180deg, var(--waterg1) 0%, var(--waterg2) 100%);
+
+            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=var(--waterg1), endColorstr=var(--waterg2), GradientType=0);
+            /* IE6-9 */
+            overflow: hidden;
+        }
+
+        #city-layer0,
+        #city-layer1,
+        #city-layer2 {
+            pointer-events: none;
+        }
+
+        .path-layer0 {
+            pointer-events: visible;
+            fill: var(--city0-fill);
+            stroke: var(--city0-line);
+            stroke-width: 2;
+            opacity: 0.7;
+        }
+
+
+        #city-layer0_17 {
+            stroke: var(--city0-fill);
+            fill: var(--city0-fill);
+            opacity: 1;
+        }
+
+        #city-layer1 path {
+            fill: var(--city1-fill);
+            stroke: var(--city1-line);
+            stroke-width: 1.5;
+            pointer-events: visible;
+            opacity: 0.7;
+        }
+
+        #city-layer2 path {
+            fill: var(--city2-fill);
+            stroke: var(--city2-line);
+            stroke-width: 1;
+            pointer-events: visible;
+            opacity: 0.8;
+        }
+
+        .city-layer3 path {
+            fill: var(--city3-fill);
+            opacity: 1;
+            stroke-width: 0;
+        }
+
+        .spacer {
+            aspect-ratio: 900/200;
+            width: 100%;
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: cover;
+        }
+
+
+
+        .services-spacer {
+            transform: rotate(180deg);
+            position: relative;
+            top: 1.5vw;
+            aspect-ratio: 900/160;
+            width: 100%;
+            contain: content;
+            overflow: visible;
+        }
+
+
+        .flip {
+            transform: rotate(180deg);
+        }
+    </style>
+
+
+</head>
+
+<body>
+    <nav class="navbar">
+        <ul class="navbar-nav">
+            <li class="logo">
+                <a href="#" class="nav-link">
+                    <svg width="2.5em" height="2.5em" viewBox="0 0 752.99964 753.00019" version="1.1"
+                        id="leetware-logo">
+                        <defs id="defs2">
+                            <linearGradient id="logoGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                                <stop style="stop-color:#e6f8ff;stop-opacity:1;" offset="0" />
+                                <stop style="stop-color:#f8caff;stop-opacity:1" offset="1" />
+                            </linearGradient>
+                        </defs>
+                        <g transform="translate(378.17449,118.44903)">
+                            <g id="g4821" transform="matrix(11.487455,0,0,11.487455,-1656.2688,-976.08242)">
+                                <path id="leetwarelogopath" style="fill:url(#logoGradient);fill-opacity:1;"
+                                    d="M 1422.1914 5.6699219 A 1417.3225 1417.3225 0 0 0 5.6699219 1422.9922 A 1417.3225 1417.3225 0 0 0 1422.9922 2840.3164 A 1417.3225 1417.3225 0 0 0 2840.3145 1422.9922 A 1417.3225 1417.3225 0 0 0 1422.9922 5.6699219 A 1417.3225 1417.3225 0 0 0 1422.1914 5.6699219 z M 1431.6387 186 A 1228.3462 1228.3462 0 0 1 2659.9844 1414.3477 A 1228.3462 1228.3462 0 0 1 1431.6387 2642.6934 A 1228.3462 1228.3462 0 0 1 203.29102 1414.3477 A 1228.3462 1228.3462 0 0 1 1431.6387 186 z M 1337.1504 379.28125 A 1039.3697 1039.3697 0 0 0 396.57227 1319.8594 L 586.50977 1319.8594 L 1337.1504 1319.8594 L 1337.1504 1130.8828 L 629.87891 1130.8828 A 850.39344 850.39344 0 0 1 1337.1504 569.21875 L 1337.1504 379.28125 z M 1526.127 379.28125 L 1526.127 569.2207 A 850.39344 850.39344 0 0 1 1966.1406 752.92969 L 1526.127 752.92969 L 1526.127 941.90625 L 2138.7207 941.90625 A 850.39344 850.39344 0 0 1 2233.3965 1130.8828 L 1526.127 1130.8828 L 1526.127 1319.8594 L 2276.7637 1319.8594 L 2466.7031 1319.8594 A 1039.3697 1039.3697 0 0 0 1526.127 379.28125 z M 396.57227 1508.834 A 1039.3697 1039.3697 0 0 0 1337.1504 2449.4121 L 1337.1504 2259.4746 A 850.39344 850.39344 0 0 1 897.13281 2075.7637 L 1337.1504 2075.7637 L 1337.1504 1886.7871 L 724.55469 1886.7871 A 850.39344 850.39344 0 0 1 629.87891 1697.8125 L 1337.1504 1697.8125 L 1337.1504 1508.834 L 586.50977 1508.834 L 396.57227 1508.834 z M 1526.127 1508.834 L 1526.127 1697.8125 L 2233.3965 1697.8125 A 850.39344 850.39344 0 0 1 1526.127 2259.4746 L 1526.127 2449.4121 A 1039.3697 1039.3697 0 0 0 2466.7031 1508.834 L 2276.7637 1508.834 L 1526.127 1508.834 z "
+                                    transform="matrix(0.02303237,0,0,0.02303237,111.26001,74.658259)" />
+                            </g>
+                        </g>
+                    </svg>
+
+                    <span class="link-text logo-text">Leetware</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#services" class="nav-link">
+                    <span class="link-text">Services</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#about" class="nav-link">
+                    <span class="link-text">About</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a href="#contact" class="nav-link">
+                    <span class="link-text">Contact</span>
+                </a>
+            </li>
+
+        </ul>
+    </nav>
+
+    <main>
+        <section class="water">
+            <div class="city">
+
+                <style>
+                    #city-stars svg {
+                        position: relative;
+                        height: 10px;
+                        width: 10px;
+                        top: 0;
+                        left: 0;
+                        background-repeat: no-repeat;
+                        background-position-x: center;
+                        background-position-y: center;
+                        background-attachment: fixed;
+                    }
+                </style>
+
+                <div id="city-sky">
+                    <div id="city-stars" style="height: 80%;width:100%;">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 556 512" id="sky-star">
+                            <defs id="star-defs">
+                                <radialGradient id="star-gradient">
+                                    <stop style="stop-color:#fff;stop-opacity:1;" offset="0" />
+                                    <stop style="stop-color:#fff;stop-opacity:1" offset="0.2" />
+                                    <stop style="stop-color:#fff;stop-opacity:0" offset="1" />
+                                </radialGradient>
+                            </defs>
+                            <path style="fill:url(#star-gradient);"
+                                d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
+                        </svg>
+                    </div>
+
+                    <script>
+                        const sky = document.getElementById("city-stars");
+                        var protoStar = document.getElementById("sky-star");
+                        var twinkles = [];
+                        for (var i = 0; i < 5; i++) {
+                            for (var j = 0; j < 5; j++) {
+                                var size = 0.5 + Math.random() * 1.5;
+
+                                var star = protoStar.cloneNode(true);
+                                star.style.top = `${j * 20 + Math.random() * 20}%`;
+                                star.style.left = `${i * 20 + Math.random() * 20}%`;
+                                star.style.height = `${size}vh`;
+                                star.style.width = `${size}vh`;
+                                star.style.filter = `blur(${size * 0.1}vh)`;
+                                star.id = `sky-star-${i}-${j}`;
+
+                                sky.appendChild(star);
+
+                                twinkles.push(KUTE.fromTo(star,
+                                    { opacity: 0.5 },
+                                    { opacity: 1 },
+                                    {
+                                        yoyo: true,
+                                        repeat: 1,
+                                        duration: 1000,
+                                        onComplete: doTwinkle,
+                                    },
+                                ));
+                                const index = twinkles.length - 1;
+                                var doTwinkle = function () {
+                                    setTimeout(() => {
+                                        twinkles[index].start();
+                                    }, 2000 + Math.random() * 10000);
+                                }
+                                twinkles[index].start();
+                            }
+                        }
+
+                    </script>
+                </div>
+                <div id="city-water"></div>
+
+
+
+                <svg class="city-spacer city-reflection" version="1.1" viewBox="0 0 776.25 419.16" xml:space="preserve"
+                    style="filter:blur(0.1vw);" xmlns="http://www.w3.org/2000/svg">
+                    <style type="text/css">
+                        #path-reflection {
+                            fill: url(#MyGradient)
+                        }
+                    </style>
+                    <defs>
+                        <linearGradient id="MyGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="20%" stop-color=var(--reflection) stop-opacity="0.1" />
+                            <stop offset="80%" stop-color=var(--reflection) stop-opacity="0.6" />
+                            <stop offset="100%" stop-color=var(--reflection) stop-opacity="0.1" />
+                        </linearGradient>
+                    </defs>
+                    <g transform="matrix(1.3333 0 0 -1.3333 0 419.16)">
+                        <path id="path-reflection"
+                            d="m135.02 88.936h-1.3433v0.15967h-1.4795v-0.26807h-2.3423v-5.8916h-2.127v-1.582h-3.6665v-1.3403h-2.9458l-6.2505-3.7515h-0.56103l-0.79834-12.315-0.79541 12.315h-0.56103l-6.2505 3.7515h-0.54492v3.2944h-5.6074v-18.646h1.273v-19.156h-1.3477v9.1538h-2.3628c-4.8301-2.1562-16.701-4.8146-26.604-5.9502-10.013-1.1484-14.324-0.31577-9.5962 1.853 2.8891 1.3242 8.5026 2.8492 14.716 4.0972h-5.2148v3.5713h-9.3237v32.301h-1.4385v-0.40576h-1.7446v0.40576h-0.69726v-2.4565h-0.13916v2.4565h-0.59033v2.8623h-4.8193v0.958h-0.65625v-0.16846h-2.7202v0.16846h-1.7358v1.0898h-2.6162v0.87451h-1.9087v-1.9644h-2.4551v-2.0933h-0.27979v2.0933h-3.6958v-0.16846h-3.1567v-1.0078h-10.452v-1.1353h-4.9189v-0.48046h-2.584v-7.0005h-1.5513v-0.24902h-4.1147v0.24902h-0.9624v-1.752h-2.3145v-0.21386h-1.0459v0.21386h-1.1851v-0.33984h-1.0459v0.33984h-0.73242v32.884h-1.7285v2.1958h582.19v-2.1958h-0.73682v-8.4961h-3.2607v-7.0591h-1.9614v-1.0386h-8.3438v-2.3906h-4.2319v-2.0391h-3.8071v-4.0855h-4.73v4.084c-0.168-0.1739-0.312-0.34124-0.312-0.48193-0.36951-0.18989-0.88576-0.38608-1.144-0.51563-0.61874-0.14688-0.8381-0.34424-1.4341-0.34424 0 0-0.85997-0.51562-1.147-0.51562-0.34731-0.64139-1.9045-0.75901-2.8653-1.3755-0.287 0-1.147-0.34424-1.147-0.34424-1.3528-0.24779-2.6486-0.73547-3.7237-1.2041-0.288 0-0.57422 5.18e-4 -0.57422-0.17138-0.57993 0.08561-0.93929-0.28301-1.4326-0.51563-0.85927-0.07558-1.6628-0.52114-2.2925-0.68702-2.1224-0.23818-4.429-0.0987-6.5918 0.17139-0.286 0-2.5796 0.17244-2.5796 0.34424-1.514 0-3.2525 0.40022-4.6245 0.49512h-1.2803v0.09521l-4.4106 0.44092c-0.573 0-3.4409-4.35e-4 -3.4409-0.34424-0.048 0-0.12658-0.01-0.22558-0.0264v-0.55811h-0.62549v-0.24316h-3.9976v0.08643l-4.0342-0.29004c-0.288 0-8.0244 0.51508-8.0244 0.17138-0.109 0-0.50315-0.02422-0.95215-0.06442v-23.027h-5.9033v-5.4814h-4.1133v-3.6548h-20.042l-4.9951-3.2241h-1.0181l-1.1279-10.882-1.1309 10.882h-1.0166l-9.6577 6.2329v17.659c-0.86301 0.0106-1.6289 0.062-1.6289 0.2124-0.859 0-9.1699 0.34327-9.1699-0.34424-0.859 0-4.585-1.0318-4.585-1.3755-0.573 7e-6 -1.1472-0.34424-1.7212-0.34424-0.286-0.1718-1.4312-0.51512-1.4312-0.68702h-0.57276c0-0.1718-2.2936-0.85986-2.5796-0.85986 0-0.3438-0.28711-4.35e-4 -0.28711-0.34424-0.287 0-2.0054-0.17234-2.0054-0.34424-0.287 0-0.85997-0.17138-1.147-0.17138 0-0.3437-0.2871-5.4e-4 -0.2871-0.34424l-0.28565-0.17138c-0.286 0-0.57421 5.1e-4 -0.57421-0.17139 0 0-2.5796-0.3449-2.5796 0-0.573 0-3.438 0.51512-3.438 0.68702-0.28701 0-0.85987-5.18e-4 -0.85987 0.17138-0.251 0-0.8075 0.10739-1.5205 0.27539v-20.818h-1.1763v-3.5273h-5.7349l-6.7837-4.3799h-4.1865l-6.7852 4.3799h-5.6938v1.1748h1.9043v3.5977h-2.1856v-0.97558h-5.7246v26.168c-1.697 0.211-4.6115 0.46875-4.8135 0.46875-0.861 0-6.019 0.85945-6.019 1.0312-3.726 0-10.89 2.9233-14.615 3.6108-1.434 0.1718-12.324 2.4067-12.324 2.4067l-0.57275-0.17138c0 0.3438-2.5796 5.1e-4 -2.5796-0.17139-0.287 0-2.2925-0.17234-2.2925-0.34424-0.573 0-5.1592-0.34519-5.1592-0.51709-0.573 0-4.0122 1e-3 -4.0122-0.34278-0.28599 0-1.7197-0.17234-1.7197-0.34424-1.5497-0.0022-3.1136-0.82867-4.585-0.85986-0.64141-0.15467-1.323-0.61552-1.4326-0.68848-0.94195-0.05147-2.0719-0.92372-2.2925-1.0313-0.77074-0.17341-1.2943-0.46184-2.0069-0.85839-0.573 0-1.4324-0.3457-2.0054-0.3457 0 0.1721-0.28675 0.17285-0.57275 0.17285-0.73615 0.57049-1.7707 0.69273-2.5796 1.0312-0.287 0-1.1455 0.51562-1.1455 0.51562h-0.57422c-1.0939 0.50619-2.0582 0.81162-3.1524 1.2041-1.924 0.41333-4.0488 1.1237-5.7319 1.3755-0.50355 0.43866-1.0769 0.51562-1.7182 0.51562 0 0.1731-2.294 0.68848-2.5811 0.68848-0.31437 0.42956-1.1804 0.63623-2.0039 1.2026-0.287 0-0.57422 0.1738-0.57422 0.3457-0.407 0-0.66962 0.25976-0.89063 0.41016h-0.88623v-0.13477h-3.6372v0.13477h-1.2686v-0.13477h-1.3096v-1.856h-0.16993v1.856h-4.9907v0.13477h-1.4341v2.0054h-1.44v-0.28564h-8.458v0.28564h-3.2695v-0.97851h-6.5435v-25.519h0.44971l0.9082-0.9917v-4.7432h0.40137v-2.9048h-0.94336v-0.63574h0.94336v-2.792l3.8511-1.1265-1.1353-0.33252v-2.5957l1.1353-0.33105-6.0938-1.7827v-5.7759h1.0635v-1.2041h-2.2441v-3.8965h-0.646l-1.5981-34.803-1.5967 34.803h-0.64599v3.8965h-2.2427v1.2041h1.062v5.7759l-6.0923 1.7827 1.1338 0.33105v2.5957l-1.1338 0.33252 3.8496 1.1265v2.792h0.94336v0.63574h-0.94336v2.9048h0.40137v4.7432l0.9082 0.9917h0.4497v31.831h-1.5571v-0.46582h-1.2568v-5.02h-1.1001v-0.73682h-3.98v0.55957h-1.4736v0.17725h-1.3257v-0.23584h-4.0767v0.23584h-0.74707v13.475h-0.97705v-6.8145h-3.523v-18.198h0.75439v-2.9019h-4.0064v-0.14502h-8.0068v0.14502h-4.7651v-0.20508h-6.9272v0.20508h-0.73536v2.9019h0.7544v10.821h-0.76904v2.0522h-0.7002v-0.30908h-1.3828v-0.68115h-2.6997v0.99023h-1.7827v-0.38818h-6.0322v0.38818h-1.2891v3.8042h-3.29v-1.3418h-6.9536v1.3418h-1.0767v-0.42481h-9.0176v0.42481h-0.5669v-5.1123h-0.82471v-0.11133h-3.4087v-0.4043h-5.6982v0.51562h-1.2305v-4.147l-0.76218 0.02648-0.0937-38.34h-9.3028v0.43945h-11.641v0.4375h-2.8906v0.43945h-1.9375l0.01 37.975h2.2497z" />
+                    </g>
+                </svg>
+
+                <svg class="city-spacer city-layer3" version="1.1" viewBox="0 0 776.25 419.16" xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g transform="matrix(1.3333 0 0 -1.3333 0 419.16)">
+                        <path
+                            d="m290 166.85c1.2308 1.0354 2.1076 2.4639 3.726 3.439 1.9618 0.90379 3.7991 1.7728 5.732 2.292 4.2538 2.0466 8.6275 4.507 12.323 6.879 0.573 0 1.433-0.574 2.006-0.574 1.8276-1.5601 3.9138-3.0675 5.731-4.298 3.3643-1.3305 6.81-2.0039 10.318-2.579 2.3966-0.59272 7.2739-2.4226 10.603-2.007 0 0 10.89 3.726 12.324 4.013 12.599 5.9534 26.851 10.288 40.694 11.176 9.4509 0.31644 19.128 7.1583 26.938 8.598 0 0.573 2.58 0 2.58 0 1.1964-0.88027 2.7989-1.7977 4.299-2.006 3.6116-4.4467 14.893-5.8771 20.347-6.592 17.058-3.6413 42.817-15.728 49.006-18.341 3.3216-1.3114 7.1078-0.58872 10.604-0.287 4.3159 0.51386 8.5764-2.2478 12.323-2.293l5.158 0.86c2.8789 0.23489 4.9334 1.1355 7.737 1.433 0.30469 0.21669 4.8864 0.70063 5.446 0.573 0.67125-0.15309 1.3274-0.32536 2.005-0.573 0.48035-0.17556 0.18719-0.22829 0.861-0.573 0.25462-0.13026 0.32753-0.1373 0.573-0.286 0.66297-0.4016 0.94383-0.59284 1.432-0.861 0.37459-0.20577 0.77725-0.35865 1.147-0.573 0.29761-0.17253 0.45095-0.40627 0.859-0.572 0.14916-0.13784 0.17518-0.0549 0.574-0.287 0.39882-0.23214 1.9437-0.99886 2.866-1.434 0.41857-0.42644 0.44559-0.57101 1.433-0.859 0.80152-0.56066 1.3593-1.2871 1.432-1.433 0.66817-0.38529 0.9489-0.86 1.72-0.86 0.48687-0.532 1.0823-0.87137 1.719-1.146l0.286-0.287c9.0369-10.609 16.759-24.116 24.734-36.418 0 0-224.52 1.3488-320.95 1.1115z" />
+                    </g>
+                </svg>
+
+                <svg class="city-spacer" id="city-layer2" version="1.1" viewBox="0 0 776.25 419.16" xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g transform="matrix(1.3333 0 0 -1.3333 0 419.16)">
+                        <path transform="matrix(.75 0 0 -.75 0 314.37)" id="layer2"
+                            d="m132.16 185.12v6.0117h-18.58v54.998h-13.557v-32.104h-18.414v-6.4922h-12.459v6.4922h-2.5176v-1.9394h-7.7871v1.9394h-15.328v-6.9785h-13.936v-2.5215h-6.5586v-1.0644h-12.461v10.564h-7.9434v32.104h-2.6152v15.838h772.89v-15.838h-1.9688v-23.611h-2.6152v-2.3066h-16.768v-9.8457h-5.0762v-9.0742h-6.3066v9.0742h-10.328v-0.83203h-5.0176v0.83203h-1.8828v-1.5371h-1.0586v-0.43359h-4.3105v0.43359h-0.9375v-6.7695h-1.3848v-2.4609h-5.0078v-0.66797h-11.604v0.66797h-2.3105v6.3223h-1.7266v2.9082h-1.7637v-1.0625h-4.9688v-9.707h-0.83398v-0.54101h-5.3301v0.54101h-3.6816v8.4902h-5.6094v2.2793h-5.4668v37.301h-272.25v-45.223h-0.95703v-0.91602h-4.6797v0.91602h-1.6562v-4.4551h-1.5586v-0.30273h-4.8496v0.30273h-1.6914v-0.30273h-1.7461v-4.123h-0.22657v4.123h-6.6543v0.30273h-1.9121v4.4551h-1.9199v-0.63477h-11.277v0.63477h-4.3594v-2.1738h-10.807v25.674h-27.055v6.1074h-3.2754v-15.143h-25.547v-11.834h-7.7754v-4.5586h-2.9766v4.5586h-0.9336v-0.68555h-1.8437v-1.5156h-3.5996v2.2012h-2.377v-0.86524h-8.043v0.86524h-1.7188v8.4531h-4.3867v-2.9785h-9.2715v2.9785h-1.4356v-0.9414h-12.023v0.9414h-0.75586v-11.359h-1.0996v-0.24805h-4.5449v-0.90039h-7.5977v1.1484h-19.621v-0.9082h-3.5293v0.9082h-1.3438v3.1016h-1.8848v-0.47461h-5.0254v0.47461h-31.414v-12.602h-9.4824v-6.0117h-9.6738z" />
+                    </g>
+                </svg>
+
+                <script>
+                    var layer2Tween = KUTE.fromTo("#layer2", { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" });
+                    layer2Tween.start();
+
+                    document.getElementById('city-layer2').addEventListener("mouseover", function (event) {
+                        if (!layer2Tween.playing) {
+                            console.log("starting")
+                            var xPercent = event.pageX / window.innerWidth;
+                            var dir = (xPercent > 0.50) ? 1 : -1;
+                            var start1 = 30 - 90 * event.pageX / window.innerWidth - 5;
+                            var start2 = start1 + 10.0;
+                            layer2Tween = KUTE.fromTo("#layer2", { draw: `${start1}% ${start2}%` }, { draw: `${start1 + dir * 120}% ${start1 + dir * 120}%` }, { duration: 2500, easing: "easingCubicOut" });
+                            layer2Tween.start()
+                        }
+                    }, false);
+                </script>
+
+
+                <svg class="city-spacer" id="city-layer1" version="1.1" viewBox="0 0 776.25 419.16" xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g transform="matrix(1.3333 0 0 -1.3333 0 419.16)" style="pointer-events: none;">
+                        <path transform="matrix(.75 0 0 -.75 0 314.37)" id="layer1"
+                            d="m549.25 179.45v1.5742h-9.666v57.188h-18.842v-50.691h-8.4453v8.0137h-9.9629v-8.0137h-1.7773v-0.7246h-3.7227v0.7246h-1.4141v-3.1816h-0.14844v3.1816h-1.3828v5.6328h-3.6055v-1.5176h-1.8105v-1.9492h-0.57227v-0.13477h-3.5742v0.13477h-4.8398v-1.9961h-0.44727v1.9961h-0.96094v5.8477h-1.0469v-3.1543h-5.1387v3.1543h-2.6816v-0.47266h-6.7012v0.47266h-1.3242v3.8984h-1.7285v-1.2441h-5.1367v1.2441h-1.3398v-0.72461h-2.4062v-5.123h-3.0293v-0.23633h-5.957v0.23633h-4.2441v-0.60938h-7.0723v0.60938h-0.48828v9.0957h-1.6328v10.828h-2.6348v-1.3965h-5.4102v-1.9414h-5.9648v1.9414h-1.9414v1.3965h-7.7539v24.703h-25.619v-29.588h-14.648v-0.70117h-6.2754v0.70117h-2.834v13.049h-0.89063v-0.6875h-3.4316v0.6875h-1.5703v19.914h-2.1953v-1.9492h-38.039v-18.076h-19.283v-11.166h-23.76v3.1895h-6.0137v7.9766h-19.109v29.848h-2.1152v-11.453h-7.418v-1.498h-6.1758v-29.717h-0.94532v-1.8223h-4.6055v1.3789h-0.53906v-0.30078h-4.5469v0.74414h-1.9395v-17.322h-3.3828v-0.56054h-1.916v-1.1973h-5.9199v1.7578h-2.2734v-0.32031h-5.4434v0.32031h-0.9043v13.881h-1.4297v3.4414h-3.4688v-0.32422h-4.1289v0.32422h-1.5274v-10.754h-1.6465v-2.6328h-0.41797v2.2773h-1.791v0.35547h-1.9726v-0.5957h-4.668v0.5957h-18.248v41.969h-11.254v-26.396h-28.744v26.396h-9.0371v-38.775h-24.516v-0.9043h-2.3262v0.9043h-0.92969v-5.4609h-0.18555v5.4609h-0.78711v8.2988h-4.4199v0.18945h-2.8809v-0.37304h-3.627v0.37304h-2.3145v30.287h-6.0332v-30.287h-3.2734v-4.6504h-0.37305v4.6504h-4.9277v-0.37304h-6.043v0.37304h-2.418v-1.3984h-2.8809v1.3984h-3.4414v-0.74804h-9.1113v0.74804h-4.2539v-21.76h-2.0684v-0.55664h-5.4863v0.55664h-1.2832v-3.8926h-3.0859v-0.47656h-1.3945v0.47656h-1.5801v-0.75586h-1.3945v0.75586h-0.97656v3.8926 21.76 48.609l772.97 0.43945v-20.506h-12.475v-10.445h-5.6133v-12.863h-13.211v23.309h-5.2578v-19.105h-12.1v-4.2031h-13.209v23.309h-14.812v-19.07h-13.211v19.07h-1.0547v-19.07h-13.211v19.07h-2.375v-32.258h-13.209v32.258h-83.896v-40.945h-4.3457v-1.0469h-6.3613v1.0469h-0.55664v-13.211h-4.4727v-4.6055h-6.6504z" />
+                    </g>
+                </svg>
+
+                <script>
+                    var layer1Tween = KUTE.fromTo("#layer1", { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" });
+                    layer1Tween.start();
+
+                    document.getElementById('city-layer1').addEventListener("mouseover", function (event) {
+                        if (!layer1Tween.playing) {
+                            var xPercent = event.pageX / window.innerWidth;
+                            var dir = (xPercent > 0.50) ? 1 : -1;
+                            var start1 = 50 - 80 * event.pageX / window.innerWidth - 5;
+                            var start2 = start1 + 10.0;
+                            layer1Tween = KUTE.fromTo("#layer1", { draw: `${start1}% ${start2}%` }, { draw: `${start1 + dir * 120}% ${start1 + dir * 120}%` }, { duration: 1500, easing: "easingCubicOut" });
+                            layer1Tween.start()
+                        }
+                    }, false);
+                </script>
+
+                <svg class="city-spacer" id="city-layer0" version="1.1" viewBox="0 0 776.25 419.16" xml:space="preserve"
+                    xmlns="http://www.w3.org/2000/svg">
+
+                    <g transform="matrix(1.3333 0 0 -1.3333 0 419.16)">
+                        <g fill="none" stroke="#aaedff">
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_0"
+                                d="m337.26-0.0039062-2.1289 77.34h-0.86133v8.6582h-2.9902v2.6758h1.416v12.836l-8.123 3.9609 1.5117 0.73632v5.7695l-1.5117 0.73632 5.1328 2.5039v6.2012h1.2578v1.418h-1.2578v6.4551h0.53516v10.539l1.2109 2.2051h0.59961v118.62h10.42v-118.62h0.59961l1.2109-2.2051v-10.539h0.53516v-6.4551h-1.2578v-1.418h1.2578v-6.2012l5.1348-2.5039-1.5137-0.73828v-5.7656l1.5137-0.73828-8.125-3.9609v-12.836h1.418v-2.6758h-2.9922v-8.6582h-0.86133l-2.1309-77.34z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_1"
+                                d="m199.38 99v1h-15.52v1h-3.8555v1h-2.584v85h2.584v13h-2.584v58h11.625v-3h20.668v-36.562h1.1719v-11.258h-1.1719v-23.18h1.291v-85h-11.625z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_2"
+                                d="m151.35 142.1-1.0605 27.363h-0.74805l-8.3359 8.3359h-0.72461v69.877h-15.371v11.225c21.112-2e-3 37.183-0.13672 56.354-0.13672v-22.85h-8.3144v-51.621h-2.8359v-3.5137h-4.8887v-2.9805h-3.9277l-8.334-8.3359h-0.74804z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_3"
+                                d="m132.9 101.12v20.342h-3.1641c-6.4394-4.7921-22.253-10.699-35.459-13.223-4.172-0.79709-7.6009-1.1649-10.152-1.1465-5.6132 0.0406-6.9763 1.9489-2.6426 5.2617 3.8542 2.9459 11.349 6.3342 19.639 9.1074h-5.2734-1.6973v7.9356h-12.432v131.12h51.281v-5.9492-110.88h1.6973v-22.227-20.342h-1.7969zm-42.064 9.0644c1.8962-0.0136 4.4445 0.25906 7.5449 0.85156 9.9193 1.8947 21.831 6.3601 26.516 9.9414 0.22013 0.16822 0.40114 0.326 0.58204 0.48437h-20.158c-6.8807-2.1574-13.298-4.9603-16.447-7.3672-3.2209-2.4622-2.2088-3.8801 1.9629-3.9102z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_4"
+                                d="m273.78 168.49v6.4492h1.0059v48.357h-4.2188v16.773h-4.7324v-4.5156h-4.7305v4.5156 18.697h9.4629 4.2188 2.2871 28.289v-83.828h1.0059v-6.4492h-32.588z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_5"
+                                d="m24.381 227.19v0.62109h-4.0273v-0.35156h-4.3496v0.35156h-0.95117v24.223h-1.7031v-12.861h-0.7832v-0.31055h-2.9531v-0.48242h-1.8789v0.48242h-1.3438v0.31055h-1.8848v12.861h-1.2305v6.7324h36.701v-4.4746h-1.2539v-18.879h-1.1855v-0.42383h-1.5566v0.42383h-1.1816v-1.4453h-2.2559v1.4453h-1.7539v-7.6016h-4.1523v-0.62109z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_6"
+                                d="m59.93 234.24v2.3125h-2.2539v0.48438h-4.1895v0.88476h-4.3496v-0.66992h-6.2285v0.66992h-1.043v20.848h21.582v-20.848h-2.0664v-0.88476h-0.9668v-2.7969h-0.48437z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_7"
+                                d="m71.416 227.09v0.22266h-1.1816v9.1875h-1.5352v22.268h15.4v-9.1856-13.082-9.1875h-6.418v-0.22266h-6.2656z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_8"
+                                d="m209.35 207.88v3.2988h-0.88086v18.148 29.441h7.8008 7.7246v-29.441h-7.7246v-18.148h-2.2539v-0.54492h-3.4102v0.54492h-0.95703v-3.2988h-0.29883zm24.227 10.307v0.47851h-0.59961v1.1113h-1.9121v-0.63281h-3.9492v0.63281h-1.4805v38.992h12.09v-29.535h9.4414v1.4316h-7.418v28.104h19.816v-28.104h-9.1543v-1.4316-2.9629h-3.2441-9.4414v-6.4941h-1.3359v-1.1113h-2.1543v-0.47851h-0.6582z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_9"
+                                d="m321.53 198.94v1.2461h-1.9648v0.39258h-1.7676v-0.52344h-5.4355v0.52344h-0.9961v33.197h-9.2227v24.996c12.896 0.19018 24.573-0.14227 36.428-0.08203v0.08203h6.9297 4.3691v-9.3906h-4.3691v-15.135l-9.4805 0.0332v-21.508h-6.041v-1.0391h-1.6758v-11.154h-1.4668v-1.6387h-5.3066z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_10"
+                                d="m407.55 200.49v2.3516h-1.4492v-0.41797h-3.5801v0.41797h-2.2266v-0.60937h-8.418v0.60937h-2.8633v45.404h-1.3027v-16.654h-1.6328v-16.617h-1.2109v-0.375h-4.2168v0.375h-3.8242v-1.8477h-7.4512v1.8477h-1.8379v39.152h-4.4355v-10.508h-11.301v15.145h11.301 14.984 14.359 16.982 12.736 2.2109 8.6719 1.8984 13.629 4.3301 1.4004 3.3125v-29.863-9.1719h-3.3125v9.1719h-1.4004v-5.7324h-1.9082v-0.32813h-2.1289v0.32813h-0.29297v5.7324h-3.9648v-1.2227h-1.3535v-1.9356h-0.29101v1.9356h-8.9024v1.2227h-1.0156v19.357h-4.4004v-2.0996h-4.2715v-38.912h-4.332v15.668h-10.615v-20.072h-1.4883v-2.3516h-0.38868zm1.877 23.822h10.615v29.814h-10.615v-29.814z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_11"
+                                d="m614.75 94.484-1.5078 24.184h-1.3555l-12.877 13.854v49.621h-1.8164v-4.0215h-11.104v4.0215h-1.793v-0.89844h-13.475v0.89844h-2.0508v76.625h95.578v-4.0449-72.58-36.004h-7.8711v-12.184h-5.4844v-8.1211h-26.723l-6.6602-7.166h-1.3555l-1.5059-24.184z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_12"
+                                d="m528.93 99.457-9.0469 9.7344h-7.5918v7.0566h-8.0078v142.59h48.488v-0.07031h14.016v-50.42h-1.6875v-1.332h-2v-1.5547h-8.8691v1.5547h-1.459v-90.768h-1.5684v-7.0566h-7.6465l-9.0449-9.7344h-5.582z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_13"
+                                d="m686.58 208.66v1.9024h-8.8301v0.76171h-0.6914v22.379h-3.3008v-17.195h-2.5606v-1.0938h-5.4141v1.0938h-2.084v42.256h8.2305 1.8281 22.135v-25.061h-2.9492v-9.1582h-2.5156v-13.221h-2.8965v-0.76171h-0.47656v-1.9024h-0.47461z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_14"
+                                d="m714.31 210v1.332h-1.6152v-0.47656h-6.0781v0.47656h-1.3379v3.8047h-1.5117v0.35352h-1.0606v16.053h-1.1426v27.229h31.463 14.451 6.4023 19.939v-16.984h-5.6719v-6.584h-2.5586v-2.2793h-5.6016v2.2793h-2.6602v-0.94531h-3.4473v-11.678h-9.1816v-1.5469h-8.0742v1.5469h-1.8047v-0.5h-4.082v0.5h-3.1992v8.9629h-1.9277v-0.80664h-5.0332v0.80664h-1.9297v-20.211h-1.3945v-1.332h-2.9434z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_15"
+                                d="m494.44 211.62v0.77344h-1.6797v3.1934h-0.34961v15.992h-1.1621v-1.1875h-4.2578v1.1875h-3.6426v-6.623h-3.9043v-2.5957h-7.4492v2.5957h-1.7422v-0.75586h-9.0957v0.75586h-1.9941v6.623 27.189h24.186 9.4121 11.604 4.4199v-46.375h-6.1172v-0.77344h-8.2266z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_16"
+                                d="m200.67 215.85v2.5898h-3.4688v-0.43164h-1.1973v-0.66016h-4.0078v0.66016h-7.6562v0.43164h-1.2422v40.33h3.9102 19.816 3.9082v-9.5723h-3.9082v-30.758h-2.8633v-0.49219h-2.1543v0.49219h-0.71875v-2.5898h-0.41796z" />
+                            <path transform="matrix(.75 0 0 -.75 0 314.37)" class="path-layer0" id="city-layer0_17"
+                                d="m688.94 253.58v3.5078h-411.86v-2.9297h-96.094v2.9297h-180.98v4.8809h776.25v-4.8809h-70.285v-3.5078h-17.031z" />
+                        </g>
+                    </g>
+                </svg>
+
+                <script>
+                    const numBuildings = 17;
+                    var layer0Tweens = [];
+                    for (let i = 0; i < numBuildings; i++) {
+                        const id = `city-layer0_${i}`;
+                        layer0Tweens.push(KUTE.fromTo(`#${id}`, { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" }));
+                        layer0Tweens[i].start();
+
+                        document.getElementById(id).addEventListener("mouseover", function (event) {
+                            const xPercent = event.pageX / window.innerWidth;
+                            const dir = (xPercent > 0.50) ? 1 : -1;
+
+                            if (!layer0Tweens[i].playing) {
+                                layer0Tweens[i] = KUTE.fromTo(`#${id}`, { draw: `${-10 + dir * 40}% ${10 + dir * 40}%` }, { draw: `${dir * 140}% ${dir * 140}%` }, { duration: 1000, offset: 20, easing: "easingCubicOut" });
+                                layer0Tweens[i].start()
+                            }
+                        }, false);
+                    } 
+                </script>
+            </div>
+
+
+            <div style="position: relative; height: 100%; pointer-events: none;">
+                <h2 style="text-align: right; margin-left: auto; margin-right:20vw; margin-top:10vh; width:100%; ">
+                    we engineer <font class="font-blue">technology</font><br>
+                    build <font class="font-green">expertise</font><br>
+                    and meet <font class="font-red">deadlines</font>
+                </h2>
+            </div>
+
+        </section>
+        <style>
+            @media (prefers-reduced-motion: no-preference) {
+                .macbook-enter {
+                    animation-name: right-enter;
+                    animation-duration: 1s;
+                    animation-iteration-count: 1;
+                }
+            }
+
+            @keyframes right-enter {
+                0% {
+                    transform: translateX(100vw);
+                }
+
+                100% {
+                    transform: translateX(0px);
+                }
+            }
+        </style>
+
+        <section class="services" id="services">
+            <div class="services-spacer">
+                <svg id="visual" viewBox="0 0 900 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+
+                    <path
+                        d="M0 110L50 102.2C100 94.3 200 78.7 300 77.5C400 76.3 500 89.7 600 88.3C700 87 800 71 850 63L900 55L900 33L850 37.5C800 42 700 51 600 45.8C500 40.7 400 21.3 300 27.5C200 33.7 100 65.3 50 81.2L0 97Z"
+                        fill="#00151f" fill-opacity="0.55"></path>
+                    <path
+                        d="M0 115L50 112C100 109 200 103 300 105.3C400 107.7 500 118.3 600 114.8C700 111.3 800 93.7 850 84.8L900 76L900 53L850 61C800 69 700 85 600 86.3C500 87.7 400 74.3 300 75.5C200 76.7 100 92.3 50 100.2L0 108Z"
+                        fill="#00151f" fill-opacity="0.8"></path>
+                    <path
+                        d="M0 127L50 127C100 127 200 127 300 131C400 135 500 143 600 142C700 141 800 131 850 126L900 121L900 74L850 82.8C800 91.7 700 109.3 600 112.8C500 116.3 400 105.7 300 103.3C200 101 100 107 50 110L0 113Z"
+                        fill="#00151f"></path>
+
+                </svg>
+            </div>
+
+
+            <h1 style="position:relative; margin-top:-8vw;">
+                Services
+            </h1>
+
+
+            <div class="inner-content">
+                <h2 class="text-in-left" style="margin: 0; margin-left: 5vw">we are <font class="font-orange">serious
+                        about
+                        software</font>
+                </h2>
+                <div
+                    style="display: flex; flex-direction: row; flex-wrap:wrap-reverse; justify-content: space-around; align-items: center;">
+                    <div style="flex:3; min-width: 400px;">
+                        <p class="text-in-left">experts in agile software delivery</p>
+                        <p class="text-in-left" style="margin-bottom:0;">proven proficiency in: </p>
+                        <p class="text-in-left" style="margin-left:2vw; margin-top:0;">
+                            <font class="font-blue">go</font>,
+                            <font class="font-orange">rust</font>,
+                            <font class="font-green">c++</font>,
+                            <font class="font-red">embedded c</font>,
+                            <font class="font-yellow">python</font> and others
+                        </p>
+                        <p class="text-in-left" style="margin-bottom:0;">specialists of industry best practices:</p>
+                        <p class="text-in-left" style="margin-left:2vw; margin-top:0;">
+                            <font class="font-green">TDD</font>,
+                            <font class="font-red">SCRUM</font>,
+                            <font class="font-blue">CI/CD</font> <br />and more
+                        </p>
+                    </div>
+                    <div style="flex:4; min-width: 400px; margin-left: auto; aspect-ratio: 1000/600;">
+                        <svg width="100%" height="100%" version="1.1" viewBox="-160 -40 922.02 274.32" class="macbook"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <defs id="defs2">
+                                <radialGradient id="macScreenGradient" cx="50%" cy="50%" r="100%" fx="100%" fy="100%">
+                                    <stop style="stop-color:#ccc;stop-opacity:1;" offset="0" />
+                                    <stop style="stop-color:#e4f;stop-opacity:1" offset="1" />
+                                </radialGradient>
+                            </defs>
+                            <g transform="matrix(1.3333 0 0 -1.3333 111.76 2103.8)">
+                                <g transform="scale(.1)" fill="none" stroke="#fff" stroke-opacity="0.8"
+                                    fill-opacity="0.2">
+                                    <path
+                                        d="m4854.2 13388h-6869.7c-5.5155 0-10.001-4.285-10.001-9.554v-104.94c0-1.711 0.1422-3.447 0.4314-5.323 1.7639-11.315 9.1182-21.267 19.676-26.625 45.673-23.168 99.899-42.025 161.17-55.908 25.728-5.871 52.713-8.808 80.208-8.808h6366.7c27.499 0 54.528 2.937 80.256 8.808 61.247 13.883 115.46 32.74 161.14 55.908 10.572 5.358 17.916 15.31 19.686 26.61 0.2607 1.821 0.4169 3.617 0.4169 5.334v104.94c0 5.27-4.4792 9.553-9.9995 9.553z"
+                                        stroke-width="25.453" fill="#fff" />
+                                    <path
+                                        d="m4024.6 13393h-5210.4c-111.82 0-202.46 86.597-202.46 193.42v3144c0 106.83 90.641 193.41 202.46 193.41h5210.4c111.82 0 202.44-86.58 202.44-193.41v-3144c0-106.83-90.62-193.42-202.44-193.42z"
+                                        stroke-width="25.453" fill="#fff" />
+                                    <path d="m4027.8 13592h-5213.3v3117.8h5213.3z" stroke-width="25.474" fill="#111"
+                                        style="fill:url(#macScreenGradient);fill-opacity:0.3;" />
+                                    <path
+                                        d="m1858.7 13308h-864.54c-46.018 0-83.329 35.642-83.329 79.613h1031.2c0-43.971-37.305-79.613-83.329-79.613z"
+                                        stroke-width="25.453" fill="#fff" />
+                                    <path
+                                        d="m1387.1 16818c0 20.798 17.629 37.617 39.373 37.617 21.749 0 39.378-16.819 39.378-37.617 0-20.748-17.629-37.617-39.378-37.617-21.744 0-39.373 16.869-39.373 37.617z"
+                                        stroke-width="15.272" fill="#444" fill-opacity="0.5" />
+
+                                </g>
+                            </g>
+                            <defs>
+                                <clipPath id="cut-off-bottom">
+                                    <rect x="-44" y="-123" width="690" height="414" />
+                                </clipPath>
+                            </defs>
+                            <g clip-path="url(#cut-off-bottom)">
+                                <g id="maclogo" fill="none">
+
+                                    <g id="logo-cpp" style="visibility: visible" transform-origin="63.5 63.5">
+                                        <g transform="matrix(1.1011 0 0 1.1011 -6.8903 -5.8666)">
+                                            <path
+                                                d="m63.5 6.6146c-1.5803 0-3.1607 0.34597-4.3595 1.0382l-41.619 24.028c-2.3978 1.3841-4.3595 4.7823-4.3595 7.5509v48.056c0.02377 4.1611 1.0795 5.7113 4.3595 7.5504l41.619 24.028c2.3974 1.3844 6.3214 1.3844 8.7188 0l41.619-24.028c1.1989-0.69222 2.2889-1.8875 3.0789-3.2562 0.78994-1.3683 1.2805-2.9099 1.2805-4.2942v-48.056c-0.0916-2.9967-1.9965-5.8441-4.3595-7.5509l-41.619-24.028c-1.1987-0.69223-2.7792-1.0382-4.3595-1.0382z"
+                                                stroke-width="1.8164" />
+                                            <path
+                                                d="m63.5 96.82c-18.504 0-33.558-15.054-33.558-33.558s15.054-33.558 33.558-33.558c11.94 0 23.076 6.4254 29.061 16.768l-14.523 8.404c-2.9955-5.1771-8.5665-8.3934-14.538-8.3934-9.2521 0-16.779 7.5269-16.779 16.779 0 9.2518 7.5269 16.779 16.779 16.779 5.972 0 11.543-3.2163 14.539-8.3944l14.523 8.4036c-5.9852 10.344-17.121 16.77-29.062 16.77z"
+                                                stroke-width="1.8164" />
+                                            <path transform="matrix(.329 0 0 .329 13.163 6.6146)"
+                                                d="m232.33 189.18h11.34v-11.34h11.33v-11.33h-11.33v-11.33h-11.34v11.33h-11.33v11.33h11.33z"
+                                                stroke-width="5.521" />
+                                            <path transform="matrix(.329 0 0 .329 13.163 6.6146)"
+                                                d="m274.83 189.18h11.34v-11.34h11.33v-11.33h-11.33v-11.33h-11.34v11.33h-11.33v11.33h11.33z"
+                                                stroke-width="5.521" />
+                                            <path
+                                                d="m63.42 96.842c-18.504 0-33.558-15.054-33.558-33.558s15.054-33.558 33.558-33.558c11.94 0 23.076 6.4254 29.061 16.769l-14.523 8.4041c-2.9956-5.1772-8.5666-8.3935-14.538-8.3935-9.2522 0-16.779 7.5269-16.779 16.779 0 9.2519 7.527 16.779 16.779 16.779 5.9721 0 11.543-3.2163 14.539-8.3945l14.523 8.4037c-5.9852 10.344-17.121 16.77-29.062 16.77z"
+                                                stroke-width="1.8164" />
+                                        </g>
+                                    </g>
+                                    <g id="logo-flutter" style="visibility: hidden" transform-origin="63.5 63.5">
+                                        <g transform="matrix(1.3555 0 0 1.3555 -16.737 -22.763)" stroke-width="1.4754">
+                                            <path d="m34.825 77.715-13.937-13.937 45.257-45.257h27.874z" />
+                                            <path d="m94.02 60.281h-27.874l-10.44 10.44 13.937 13.937z" />
+                                            <path d="m55.706 98.595 10.44 10.44h27.874l-24.377-24.377z" />
+                                        </g>
+                                        <g transform="matrix(.4788 -.4788 .4788 .4788 -47.648 61.697)"
+                                            stroke-width="2.9537">
+                                            <rect x="59.8" y="123.1" width="39.4" height="39.4" />
+                                        </g>
+                                    </g>
+                                    <g id="logo-py" style="visibility: hidden" transform-origin="63.5 63.5">
+                                        <g stroke-width="2">
+                                            <path
+                                                d="m45.761 10.816c2.9458 0 5.3267 2.3904 5.3267 5.348 4e-6 2.9576-2.3809 5.348-5.3267 5.348-2.9458 1.3e-5 -5.3267-2.3904-5.3267-5.348-2e-6 -2.9576 2.3809-5.348 5.3267-5.348z" />
+                                            <path
+                                                d="m62.088 1.4056c-31.027 0-29.09 13.509-29.09 13.509l0.03459 13.996h29.609v4.202h-41.37s-19.855-2.2607-19.855 29.171c-2.7e-6 31.431 17.33 30.317 17.33 30.317h10.342v-14.586s-0.55748-17.399 17.053-17.399h29.366s16.499 0.26777 16.499-16.009v-26.914s2.5051-16.288-29.92-16.288z" />
+                                            <path
+                                                d="m81.672 116.43c-2.9458 0-5.3267-2.3904-5.3267-5.348 0-2.9576 2.3809-5.348 5.3267-5.348s5.3267 2.3904 5.3267 5.348c1.1e-5 2.9576-2.3809 5.348-5.3267 5.348z" />
+                                            <path
+                                                d="m65.345 125.85c31.027 0 29.09-13.509 29.09-13.509l-0.034535-13.996h-29.609v-4.2021h41.37s19.855 2.2607 19.855-29.171c2e-5 -31.431-17.33-30.317-17.33-30.317h-10.342v14.586s0.55748 17.399-17.053 17.399h-29.366s-16.499-0.26777-16.499 16.009v26.914s-2.5051 16.288 29.92 16.288z" />
+                                        </g>
+                                    </g>
+
+                                    <g id="logo-go" style="visibility: hidden" transform-origin="63.5 63.5">
+                                        <g transform="matrix(1.7421 0 0 1.7421 -57.743 -48.9)" stroke-width="1.148">
+                                            <path class="st0"
+                                                d="m13.63 55.168c-0.22183 0-0.27729-0.20117-0.16637-0.50294l1.1646-2.7159c0.11092-0.30176 0.38821-0.50294 0.61004-0.50294h19.799c0.22183 0 0.8606 0.20117 0.74968 0.50294l-1.5261 2.7159c-0.11092 0.30176-0.38821 0.60355-0.55458 0.60355z" />
+                                            <path class="st0"
+                                                d="m5.2557 61.897c-0.22183 0-0.27729-0.19642-0.16637-0.49104l1.1646-2.6516c0.11092-0.29463 0.38821-0.49104 0.61004-0.49104h25.289c0.22183 0 0.70509 0.4001 0.60804 0.68374l-0.77442 2.2625c-0.05546 0.39283-0.27729 0.58924-0.49912 0.58924z" />
+                                            <path class="st0"
+                                                d="m17.906 68.126c-0.22183 0-0.27729-0.2852-0.16637-0.57038l0.77641-2.3767c0.11092-0.2852 0.33275-0.57039 0.55458-0.57039h11.092c0.22183 0 1.1261 0.33392 1.1596 0.71269-0.02363 0.04725-0.13454 2.4705-0.13454 2.4705 0 0.38026-1.025 0.42923-1.1914 0.42923z" />
+                                            <path
+                                                d="m98.755 53.009c4.308 0.07115 8.0328 3.0057 8.875 7.6383 0.11091 0.5546 0.11094 1.1094 0.16639 1.8304-0.27728 4.7694-2.6617 8.3188-7.043 10.593-2.9393 1.4974-5.9897 1.6638-9.0398 0.3328-3.9931-1.7747-6.1008-6.1564-5.1025-10.482 1.2201-5.2131 4.5477-8.485 9.7055-9.6497 0.81256-0.08785 1.6268-0.17446 2.4384-0.2628z" />
+                                            <path
+                                                d="m59.53 42.332c-1.2712 0.02773-2.5606 0.16686-3.864 0.40257-6.3778 1.1646-11.591 4.4366-15.528 9.5944-3.6603 4.7694-5.4348 10.204-4.7138 16.249 0.61005 5.1022 2.939 9.2062 7.043 12.312 4.4366 3.3274 9.4835 4.3813 14.919 3.6603 6.5995-0.88734 11.812-4.1598 15.805-9.4285 0.90657-1.195 1.683-2.4513 2.3322-3.7632 0.93422 3.3787 2.812 6.2823 5.5433 8.6434 3.882 3.3274 8.4847 4.7694 13.532 4.8803 1.4419-0.16638 2.9395-0.22139 4.4371-0.49869 5.1575-1.0537 9.6497-3.383 13.31-7.0988 5.1576-5.2131 7.3208-11.314 6.3778-18.801-0.72096-5.324-3.4385-9.3724-7.8198-12.367-4.825-3.2721-10.149-3.8264-15.806-2.8281-6.5995 1.1646-11.48 3.9375-15.528 9.2615-1.7346 2.2703-3.0337 4.6702-3.8354 7.2094h-17.849c-0.83188 0-1.2196 0.55454-1.386 0.88728-0.77642 1.4419-2.1078 4.326-2.8287 6.0452-0.3882 0.9428-0.11094 1.664 1.0537 1.664h10.704c-0.5546 0.77642-0.99846 1.4415-1.4976 2.0516-2.4956 2.8284-5.6568 4.1593-9.4279 3.6603-4.3813-0.61005-7.4314-4.2704-7.487-8.707-0.05546-4.4921 1.8859-8.0968 5.6571-10.537 3.1613-2.052 6.5437-2.5512 10.038-0.83199 1.1646 0.5546 1.7747 1.1646 2.6066 2.1074 0.72097 0.83188 0.77629 0.77632 1.6082 0.55449 3.4385-0.88734 5.8235-1.5528 9.3173-2.4402 0.66551-0.16638 0.88723-0.44344 0.55449-0.94258-1.3865-3.2166-3.4938-5.8785-6.4331-7.8198-3.3692-2.2877-7.0189-3.2028-10.832-3.1197z" />
+                                        </g>
+                                    </g>
+                                    <g id="logo-rust" style="visibility: hidden" transform-origin="63.5 63.5">
+                                        <g stroke-width="2">
+                                            <path
+                                                d="m107.1 62.589c0 1.1011-0.0401 2.1883-0.1198 3.271h-4.4913c-0.44913 0-0.62968 0.29704-0.62968 0.74059v2.0731c0 4.8834-2.7314 5.9546-5.1313 6.2195-2.2856 0.25923-4.8113-0.96287-5.1198-2.3726-1.3485-7.6361-3.5885-9.2601-7.1312-12.093 4.3999-2.8102 8.9712-6.9681 8.9712-12.554 0-6.0006-4.0799-9.7783-6.857-11.633-3.9084-2.5915-8.2283-3.1097-9.394-3.1097h-46.399c6.297-7.0717 14.857-12.093 24.456-13.936l5.4741 5.7818c1.2343 1.3015 3.2799 1.3591 4.5827 0.10606l6.1256-5.897c12.8 2.4071 23.656 10.446 29.942 21.538l-4.1942 9.5365c-0.72343 1.647 0.0159 3.5819 1.6456 4.3076l8.0683 3.6165c0.13958 1.4397 0.2127 2.9024 0.2127 4.3767z" />
+                                            <path
+                                                d="m53.499 46.833h14.742c0.76225 0 5.3827 0.88799 5.3827 4.3651 0 2.8909-3.5427 3.9275-6.457 3.9275h-13.691z" />
+                                            <path
+                                                d="m27.557 54.423c1.6342-0.73139 2.3771-2.6606 1.6457-4.3076l-1.5771-3.5935h6.1941v28.103h-12.457c-1.0845-3.8468-1.6685-7.901-1.6685-12.093 0-1.6009 0.0923-3.7286 0.15225-4.4773z" />
+                                            <path
+                                                d="m87.155 91.843c-1.7485-0.37776-3.4742 0.74405-3.8399 2.5108l-1.7828 8.3848c-5.497 2.5108-11.657 3.916-18.057 3.916-6.5827 0-12.8-1.4628-18.399-4.0888l-1.7828-8.3847c-0.37487-1.7622-2.0914-2.8909-3.8399-2.5108l-7.3484 1.5894c-1.36-1.4167-2.6285-2.9254-3.7942-4.5149h35.77c0.40456 0 0.67428-0.07369 0.67428-0.44457v-12.784c0-0.37087-0.26962-0.44457-0.67428-0.44457h-10.457v-8.0738h11.303c1.032 0 5.5199 0.29704 6.9484 6.0812 0.44914 1.7737 1.44 7.5555 2.1142 9.4098 0.67199 2.0731 3.4056 6.2134 6.3198 6.2195l17.854 0.03741s-1.974 3.1922-3.4253 4.6894l-7.5198-1.624z" />
+                                            <path
+                                                d="m63.5 2.6458c-0.60341 0-1.1544 0.31219-1.463 0.82476l-3.1083 5.0679c-0.4891 0.040399-0.9784 0.089479-1.463 0.14366l-4.0225-4.3537c-0.408-0.43995-1.0136-0.63669-1.5999-0.52038-0.58856 0.11856-1.0732 0.53301-1.28 1.0997l-2.0572 5.563c-0.47772 0.13811-0.95069 0.28495-1.417 0.4346l-4.777-3.467c-0.4857-0.3536-1.1189-0.42852-1.6686-0.19585-0.55199 0.23039-0.94839 0.73477-1.0444 1.3245l-0.94878 5.8627c-0.43886 0.22911-0.87305 0.46519-1.3028 0.7059l-5.3599-2.465c-0.54513-0.25123-1.1772-0.199-1.68 0.13746-0.49826 0.33399-0.78974 0.90656-0.76688 1.509l0.20567 5.9542c-0.3817 0.30761-0.76009 0.62209-1.1338 0.93999l-5.748-1.3705c-0.58399-0.13715-1.2003 0.038-1.6231 0.46406-0.42513 0.4273-0.59759 1.0435-0.46046 1.6356l1.3488 5.7929c-0.31414 0.37549-0.62556 0.75581-0.9307 1.1405l-5.9082-0.20722c-0.59542-0.016-1.1656 0.2705-1.4971 0.77256-0.33372 0.49988-0.3838 1.1406-0.13589 1.6934l2.4453 5.4131c-0.23783 0.43422-0.47278 0.87199-0.70022 1.3131l-5.8172 0.95343c-0.59087 0.0968-1.089 0.49519-1.3141 1.0526-0.2286 0.55858-0.15417 1.1978 0.19428 1.6816l3.4396 4.8142c-0.14976 0.47565-0.2948 0.95367-0.43201 1.4397l-5.5196 2.0733c-0.55996 0.21084-0.97279 0.69899-1.0893 1.2898-0.11668 0.592 0.07911 1.1982 0.51676 1.6128l4.3196 4.054c-0.05371 0.48949-0.1016 0.98252-0.14264 1.4743l-5.0167 3.1326c-0.50856 0.31659-0.81857 0.87642-0.81857 1.4857 0 0.60927 0.31001 1.1634 0.81857 1.4743l5.0167 3.1326c0.04101 0.49296 0.088874 0.98483 0.14264 1.4743l-4.3196 4.054c-0.4377 0.41115-0.63331 1.022-0.51676 1.6128 0.11668 0.59316 0.52938 1.0802 1.0893 1.2898l5.5196 2.0733c0.13703 0.48142 0.28239 0.95944 0.43201 1.4397l-3.4396 4.8142c-0.3497 0.49065-0.42402 1.1276-0.19428 1.6816 0.22955 0.55862 0.72893 0.95706 1.3255 1.0526l5.8172 0.95343c0.22736 0.44457 0.46024 0.88234 0.70022 1.3131l-2.4453 5.4017c-0.24926 0.54938-0.19793 1.1862 0.13592 1.6929 0.33372 0.50334 0.90167 0.79727 1.4971 0.77308l5.8968-0.20877c0.30747 0.38699 0.61733 0.76596 0.93276 1.1426l-1.3482 5.7934c-0.13703 0.58742 0.03519 1.198 0.46043 1.6242 0.42172 0.42961 1.0353 0.60121 1.6227 0.46302l5.7485-1.3591c0.37369 0.32012 0.75205 0.63104 1.1338 0.93741l-0.20567 5.9547c-0.0223 0.60235 0.26871 1.1744 0.76688 1.5084 0.49597 0.33515 1.131 0.38614 1.6795 0.13488l5.3599-2.465c0.432 0.24193 0.86671 0.47669 1.3033 0.7059l0.94826 5.8627c0.096 0.59658 0.49124 1.1009 1.0444 1.3358 0.55196 0.23136 1.1887 0.1569 1.6686-0.1943l4.777-3.467c0.47197 0.15094 0.94658 0.29847 1.4289 0.43667l2.0567 5.563c0.20922 0.56435 0.69376 0.98242 1.28 1.0976 0.58738 0.11985 1.1885-0.078 1.5999-0.52039l4.023-4.3537c0.48571 0.0563 0.97497 0.10337 1.463 0.14727l3.1083 5.056c0.31319 0.51022 0.86934 0.82476 1.4624 0.82476 0.59314 0 1.1543-0.31351 1.4743-0.82476l3.1089-5.056c0.48913-0.0439 0.97674-0.0909 1.4624-0.14727l4.023 4.3537c0.40796 0.44229 1.0136 0.64017 1.5999 0.52039 0.58856-0.11631 1.0732-0.53326 1.28-1.0976l2.0572-5.563c0.47769-0.13811 0.95178-0.28564 1.4283-0.43667l4.777 3.467c0.4857 0.3513 1.1189 0.42594 1.6686 0.1943 0.55316-0.22911 0.94839-0.73463 1.0444-1.3358l0.94878-5.8627c0.43886-0.22912 0.87304-0.4675 1.3028-0.7059l5.3599 2.465c0.54513 0.25122 1.1772 0.19998 1.68-0.13488 0.49826-0.33629 0.78807-0.90608 0.76636-1.5084l-0.20567-5.9547c0.38169-0.30762 0.76017-0.61719 1.1327-0.93741l5.7485 1.3591c0.58399 0.1381 1.1998-0.0334 1.6226-0.46302 0.42514-0.42729 0.59757-1.0414 0.46043-1.6242l-1.3482-5.7934c0.3154-0.37661 0.62618-0.75558 0.93018-1.1426l5.9082 0.20877c0.59543 0.02564 1.1662-0.26923 1.4976-0.77256 0.33373-0.50219 0.38469-1.1417 0.13436-1.6934l-2.4453-5.4017c0.23878-0.43649 0.4729-0.8743 0.69918-1.3131l5.8172-0.95343c0.59199-0.09548 1.0901-0.49404 1.3141-1.0526 0.22861-0.55628 0.15641-1.1978-0.1943-1.6816l-3.4401-4.8142c0.14849-0.47569 0.29383-0.95364 0.43201-1.4397l5.5201-2.0733c0.56113-0.21181 0.97507-0.69899 1.0893-1.2898 0.11894-0.592-0.0778-1.1982-0.51677-1.6128l-4.3202-4.054c0.0525-0.4895 0.1009-0.98253 0.14315-1.4743l5.0168-3.1326c0.50856-0.31563 0.81855-0.87656 0.81855-1.4743 0-0.59777-0.30911-1.1632-0.81752-1.4857h-0.0351l-5.0173-3.1326c-0.0423-0.49296-0.0901-0.98484-0.14262-1.4743l4.3196-4.054c0.43887-0.4123 0.63562-1.0231 0.51676-1.6128-0.11542-0.59316-0.52821-1.0814-1.0893-1.2898l-5.5196-2.0733c-0.13832-0.48142-0.28332-0.95944-0.43202-1.4397l3.4396-4.8142c0.35087-0.48949 0.42289-1.1264 0.19431-1.6816-0.22861-0.55631-0.72786-0.95476-1.3141-1.0526l-5.8167-0.95343c-0.22638-0.4446-0.462-0.88234-0.6997-1.3131l2.4458-5.4131c0.25024-0.55054 0.19867-1.1867-0.13487-1.6934-0.33257-0.50215-0.89594-0.7956-1.4971-0.77256l-5.9087 0.20722c-0.30523-0.38469-0.61569-0.76617-0.93224-1.1405l1.3596-5.7929c0.13704-0.58855-0.0352-1.2094-0.46043-1.6356-0.42171-0.42618-1.0341-0.60226-1.6226-0.46406l-5.7485 1.3705c-0.37256-0.31787-0.75094-0.63247-1.1338-0.93999l0.20722-5.9542c0.0223-0.60239-0.26869-1.175-0.76688-1.509-0.49941-0.33633-1.1315-0.38731-1.68-0.13746l-5.3599 2.465c-0.43315-0.23969-0.86736-0.47669-1.3028-0.7059l-0.94882-5.8627c-0.0961-0.59431-0.49124-1.0987-1.0444-1.3245-0.55197-0.23135-1.1887-0.15663-1.6686 0.19585l-4.777 3.467c-0.47082-0.15093-0.94387-0.29649-1.417-0.4346l-2.0572-5.563c-0.20922-0.56666-0.69376-0.98219-1.28-1.0997-0.58741-0.11631-1.1885 0.080502-1.5999 0.52038l-4.0225 4.3537c-0.4857-0.054203-0.97497-0.10328-1.463-0.14366l-3.1083-5.0679c-0.31414-0.51254-0.87093-0.82476-1.4743-0.82476zm-0.2868 10.16c0.46132 0.0085 0.92862 0.1085 1.3772 0.31006 1.7942 0.8016 2.6055 2.9253 1.8056 4.7336-0.79427 1.8082-2.8913 2.6257-4.6855 1.8195-1.7942-0.80163-2.6055-2.9253-1.8056-4.7336 0.59571-1.3562 1.9244-2.155 3.3083-2.1296zm42.788 32.432c0.46132 0.0085 0.92862 0.1085 1.3772 0.31006 1.7942 0.8016 2.6055 2.9253 1.8056 4.7336-0.79427 1.8082-2.8913 2.6257-4.6855 1.8195-1.7942-0.80163-2.6055-2.9253-1.8056-4.7336 0.59571-1.3562 1.9244-2.155 3.3083-2.1296zm-85.239 0.5395c1.3826-0.02442 2.7088 0.77228 3.3088 2.1275 0.79539 1.8082-0.0126 3.9273-1.8056 4.7336-1.7942 0.80278-3.8855-0.01259-4.6855-1.8195-0.79994-1.806 0.01259-3.9278 1.8056-4.7341 0.44855-0.2004 0.91578-0.29933 1.3767-0.30748zm16.139 50.433c1.6528-0.01468 3.1416 1.1408 3.5016 2.8329 0.41029 1.9349-0.81052 3.8466-2.7316 4.2612-1.9199 0.41696-3.8054-0.81558-4.2168-2.7528-0.41028-1.9349 0.80887-3.8466 2.7311-4.2612 0.23999-0.05169 0.47961-0.078 0.71572-0.0801zm52.739 0.1726c0.23614 0.0022 0.47521 0.02827 0.7152 0.0801 1.92 0.41349 3.143 2.3268 2.7316 4.2618-0.41139 1.9349-2.2974 3.1669-4.2173 2.7523h-0.01137c-1.9199-0.41696-3.1312-2.3263-2.7197-4.2612 0.35898-1.6931 1.8486-2.8483 3.5016-2.8329z" />
+                                        </g>
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+                    </div>
+                </div>
+
+                <script>
+                    const maclogo = document.getElementById("maclogo");
+                    var xspeed = 4;
+                    var yspeed = 3;
+                    var xpos = Math.floor(Math.random() * 10) * xspeed;
+                    var ypos = Math.floor(Math.random() * 5) * yspeed;
+
+                    var angle = 0;
+                    const logos = ["logo-cpp", "logo-go", "logo-rust", "logo-flutter", "logo-py"];
+                    var logoIndex = 0;
+
+                    function switchLogo() {
+                        var current = document.getElementById(logos[logoIndex]);
+                        logoIndex = (logoIndex + 1 + Math.floor(Math.random() * (logos.length - 2))) % logos.length;
+                        angle += 180;
+                        KUTE.to(current, { rotate: angle }, {
+                            duration: 100,
+                            easing: "easingCubicIn",
+                            onComplete: () => {
+                                current.style.visibility = "hidden";
+                                var next = document.getElementById(logos[logoIndex]);
+                                next.style.visibility = "visible";
+                                angle += 180;
+                                KUTE.to(next, { rotate: angle }, { duration: 100, easing: "easingCubicOut" }).start()
+                            }
+                        }).start();
+                    }
+
+                    var moveTween = KUTE.to("#maclogo",
+                        { scale: 1 },
+                        { duration: 1, onComplete: updatePos }
+                    ).start();
+
+                    const colors = ["#fa8", "#ee4", "#4f4", "#0ff", "#bcf", "#f8f"];
+                    var colorIndex = 0;
+                    maclogo.style.stroke = colors[colorIndex];
+
+                    function updatePos() {
+                        const xoffset = -52;
+                        const yoffset = -120;
+
+                        var bounce = false;
+
+                        if ((xspeed > 0 && xpos > 576) || (xspeed < 0 && xpos < 0)) {
+                            xspeed = -xspeed;
+                            bounce = true;
+                        }
+                        if ((yspeed > 0 && ypos > 280) || (yspeed < 0 && ypos < 0)) {
+                            yspeed = -yspeed;
+                            bounce = true;
+                        }
+                        xpos += xspeed;
+                        ypos += yspeed;
+
+                        if (bounce) {
+                            switchLogo();
+                            colorIndex = (colorIndex + 1) % colors.length;
+                            maclogo.style.stroke = colors[colorIndex];
+                        }
+
+
+                        moveTween = KUTE.to("#maclogo",
+                            { translateX: xoffset + xpos, translateY: yoffset + ypos, scale: 1 },
+                            { duration: 30, onComplete: updatePos }
+                        ).start();
+                    }
+                </script>
+
+                <h2 class="text-in-right"
+                    style="margin-top: 5vw; margin-bottom: 0; margin-right: 5vw; margin-left:auto; text-align: right;">
+                    doing <font class="font-blue">electronics</font> the right way
+                </h2>
+                <div
+                    style="display: flex; flex-direction: row; flex-wrap:wrap; justify-content: space-around; align-items: center;">
+                    <div style="flex:4; min-width: 400px; margin-left: auto; aspect-ratio: 200/160;">
+                        <svg width="100%" height="100%" version="1.1" viewBox="0 0 200 120" class="circuitboard"
+                            id="pcb">
+                            <g fill="none" stroke-width="0.65" id="pcb-base">
+                                <path id="pcb-top"
+                                    d="m100 10c-47.763 0.0538-86.434 22.424-86.433 50-1e-5 7.225 2.6585 14.091 7.4347 20.293l44.021 25.415c10.742 2.7575 22.633 4.2922 35.147 4.2922 47.829-3e-5 86.603-22.386 86.602-50-4e-5 -4.7327-1.1638-9.4358-3.4489-13.97-1.7047-3.4487-3.4795-2.0305-5.2762-0.99322l-13.769 7.9499c-1.7545 1.0132-5.2184 1.0132-7.0089-0.0207l-44.974-25.965c-1.7331-1.0008-1.7329-3.0007 7e-3 -4.0054l13.886-8.0171c2.5604-1.4784 1.5971-2.407-1.7053-2.9673-7.8888-1.3324-16.075-2.0112-24.313-2.0112zm0.16898 7.0001a5.1962 3 0 0 1 5.1961 2.9998 5.1962 3 0 0 1-5.1961 3.0003 5.1962 3 0 0 1-5.1961-3.0003 5.1962 3 0 0 1 5.1961-2.9998zm-69.282 40a5.1962 3 0 0 1 5.1961 2.9998 5.1962 3 0 0 1-5.1961 2.9998 5.1962 3 0 0 1-5.1961-2.9998 5.1962 3 0 0 1 5.1961-2.9998zm138.56 0a5.1962 3 0 0 1 5.1961 2.9998 5.1962 3 0 0 1-5.1961 2.9998 5.1962 3 0 0 1-5.1961-2.9998 5.1962 3 0 0 1 5.1961-2.9998zm-69.282 40a5.1962 3 0 0 1 5.1961 3.0003 5.1962 3 0 0 1-5.1961 2.9998 5.1962 3 0 0 1-5.1961-2.9998 5.1962 3 0 0 1 5.1961-3.0003z"
+                                    stroke="#5050ff" stroke-linejoin="round" />
+                                <path id="pcb-bottom"
+                                    d="m100 6.9998c-47.763 0.0538-86.434 22.424-86.433 50-2e-5 7.225 2.6585 14.091 7.4347 20.293l44.021 25.415c10.742 2.7575 22.633 4.2922 35.147 4.2922 47.829-3e-5 86.603-22.386 86.602-50-4e-5 -4.7327-1.1637-9.4358-3.4489-13.97-1.7047-3.4487-3.4795-2.0305-5.2762-0.99322l-13.769 7.9499c-1.7545 1.0132-5.2184 1.0132-7.0089-0.0207l-44.974-25.965c-1.7331-1.0008-1.7329-3.0007 7e-3 -4.0054l13.886-8.0171c2.5604-1.4784 1.5971-2.407-1.7053-2.9673-7.8888-1.3324-16.075-2.0112-24.313-2.0112zm0.16898 7.0001a5.1962 3 0 0 1 5.1961 2.9998 5.1962 3 0 0 1-5.1961 3.0003 5.1962 3 0 0 1-5.1961-3.0003 5.1962 3 0 0 1 5.1961-2.9998zm-69.282 40a5.1962 3 0 0 1 5.1961 2.9998 5.1962 3 0 0 1-5.1961 2.9998 5.1962 3 0 0 1-5.1961-2.9998 5.1962 3 0 0 1 5.1961-2.9998zm138.56 0a5.1962 3 0 0 1 5.1961 2.9998 5.1962 3 0 0 1-5.1961 2.9998 5.1962 3 0 0 1-5.1961-2.9998 5.1962 3 0 0 1 5.1961-2.9998zm-69.282 40a5.1962 3 0 0 1 5.1961 3.0003 5.1962 3 0 0 1-5.1961 2.9998 5.1962 3 0 0 1-5.1961-2.9998 5.1962 3 0 0 1 5.1961-3.0003z"
+                                    stroke="#ff6060" stroke-linejoin="round" />
+                                <g transform="translate(-85.57 -21.5)" id="pcb-c1">
+                                    <path d="m138.11 58 0.86602-0.5v-2l-1.732-1-0.86603 0.5" stroke="#999999" />
+                                    <path d="m136.37 59 1.732-1v-2l-1.732-1-1.7321 1" stroke="#808000" />
+                                    <path d="m134.64 56-0.86602 0.5v2l1.732 1 0.86602-0.5" stroke="#b3b3b3" />
+                                    <path d="m136.37 55 1.7321 1v2l-1.7321 1v-2l-1.732-1 1.732-1" stroke="#808000" />
+                                </g>
+                                <g transform="translate(-288.22 -20.5)" id="pcb-ec1">
+                                    <path d="m366.74 40-8.6603 5m0-5 8.6602 5" stroke="#6d6d6d" />
+                                    <path d="m353.75 49.5-5.1962 3v2l13.856 8 13.856-8v-2l-5.1962-3" stroke="#e857a1" />
+                                    <path
+                                        d="m371.07 52.5c0 2.7614-3.8773 5-8.6602 5-4.7829 0-8.6603-2.2386-8.6603-5v-10c0-2.7614 3.8773-5 8.6603-5 4.7829 0 8.6602 2.2386 8.6602 5z"
+                                        stroke="#5f8dd3" stroke-linejoin="round" />
+                                </g>
+                                <g transform="translate(-11 58.5)" id="pcb-j1">
+                                    <g stroke="#808080">
+                                        <path d="m123.38-16.5-1.732 1-0.86603 1.5v1l0.86603 0.5 4.3301-2.5" />
+                                        <path d="m131.18-12-1.732 1-0.86602 1.5v1l0.86602 0.5 4.3301-2.5" />
+                                        <path d="m138.97-7.5-1.732 1-0.86602 1.5v1l0.86602 0.5 4.3301-2.5" />
+                                        <path d="m146.77-3-1.732 1-0.86602 1.5v1l0.86602 0.5 4.3301-2.5" />
+                                        <path d="m115.59-21-1.732 1-0.86603 1.5v1l0.86603 0.5 4.3301-2.5" />
+                                        <path d="m119.05-19-0.86602 1.5v1l0.86602 0.5 2.5981-1.5" />
+                                        <path d="m111.26-23.5-0.86602 1.5v1l0.86602 0.5 2.5981-1.5" />
+                                        <path d="m126.85-14.5-0.86602 1.5v1l0.86602 0.5 2.5981-1.5" />
+                                        <path d="m134.64-10-0.86602 1.5v1l0.86602 0.5 2.5981-1.5" />
+                                        <path d="m142.44-5.5-0.86602 1.5v1l0.86602 0.5 2.5981-1.5" />
+                                    </g>
+                                    <g stroke="#ff6600">
+                                        <path d="m158.89-8 1.7321 1v2l-8.6603 5-43.301-25v-2l1.732-1" />
+                                        <path d="m110.39-27 41.569 24 6.9282-4v-4l-41.569-24-6.9282 4z" />
+                                        <path d="m119.92-28.5 1.732 1-0.86603 1.5-3.4641-2z" />
+                                        <path d="m127.71-24 1.732 1-0.86603 1.5-3.4641-2z" />
+                                        <path d="m135.51-19.5 1.732 1-0.86603 1.5-3.4641-2z" />
+                                        <path d="m151.1-10.5 1.732 1-0.86604 1.5-3.4641-2z" />
+                                        <path d="m143.3-15 1.732 1-0.86603 1.5-3.4641-2z" />
+                                        <path d="m119.05-31-1.732-1 0.86603-1.5 3.4641 2z" />
+                                        <path d="m126.85-26.5-1.732-1 0.86603-1.5 3.4641 2z" />
+                                        <path d="m134.64-22-1.732-1 0.86603-1.5 3.4641 2z" />
+                                        <path d="m142.44-17.5-1.732-1 0.86603-1.5 3.4641 2z" />
+                                        <path d="m150.23-13-1.732-1 0.86603-1.5 3.4641 2z" />
+                                    </g>
+                                </g>
+                                <g transform="translate(8.8 2)" id="pcb-u1">
+                                    <g stroke="#40bfbf">
+                                        <path
+                                            d="m49.771 40c0.86603-0.5 0.86602 0.5 1.7321 0l0.86602-0.5 0.86603 0.5-0.86603 0.5c-0.86602 0.5-0.86603-0.5-1.732 0z" />
+                                        <path
+                                            d="m51.503 41c0.86603-0.5 0.86602 0.5 1.7321 0l0.86602-0.5 0.86603 0.5-0.86603 0.5c-0.86602 0.5-0.86603-0.5-1.732 0z" />
+                                        <path
+                                            d="m53.235 42c0.86603-0.5 0.86602 0.5 1.7321 0l0.86602-0.5 0.86603 0.5-0.86603 0.5c-0.86602 0.5-0.86603-0.5-1.732 0z" />
+                                        <path
+                                            d="m54.967 43c0.86603-0.5 0.86602 0.5 1.7321 0l0.86602-0.5 0.86603 0.5-0.86603 0.5c-0.86602 0.5-0.86603-0.5-1.732 0z" />
+                                    </g>
+                                    <path d="m48.038 50 8.6603-5v-2l-7.7942-4.5-7.7942 4.5-0.86603 1.5v1z"
+                                        stroke="#008080" />
+                                    <g stroke="#40bfbf">
+                                        <path
+                                            d="m47.172 48.5c-0.86603 0.5 1e-6 1-0.86603 1.5l-0.86602 0.5-0.86603-0.5 0.86603-0.5c0.86602-0.5 0-1 0.86602-1.5z" />
+                                        <path
+                                            d="m45.44 47.5c-0.86603 0.5 1e-6 1-0.86603 1.5l-0.86602 0.5-0.86603-0.5 0.86603-0.5c0.86602-0.5 0-1 0.86602-1.5z" />
+                                        <path
+                                            d="m43.708 46.5c-0.86603 0.5 1e-6 1-0.86603 1.5l-0.86602 0.5-0.86603-0.5 0.86603-0.5c0.86602-0.5 0-1 0.86602-1.5z" />
+                                        <path
+                                            d="m41.976 45.5c-0.86603 0.5 1e-6 1-0.86603 1.5l-0.86603 0.5-0.86603-0.5 0.86603-0.5c0.86603-0.5 0-1 0.86603-1.5z" />
+                                    </g>
+                                </g>
+                                <g transform="translate(-210 14)" id="pcb-uc">
+                                    <path
+                                        d="m327.76 47.5v-2m-51.962 2v-2m51.962 0-25.981-15-25.981 15m0 2 25.981 15 25.981-15"
+                                        stroke="#00ff00" />
+                                    <g transform="translate(201.78 12.5)" stroke="#30a030">
+                                        <path d="m77.483 37v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m80.947 39v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m84.412 41v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m87.876 43v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m91.34 45v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m94.804 47v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                    </g>
+                                    <g transform="matrix(-1 0 0 1 401.78 12.5)" stroke="#30a030">
+                                        <path d="m77.483 37v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m80.947 39v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m84.412 41v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m87.876 43v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m91.34 45v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                        <path d="m94.804 47v-2c0.86603-0.5 2.5981 0.5 1.732 1v2z" />
+                                    </g>
+                                    <path
+                                        d="m298.32 32.5-1.7321 1c0.86603 0.5 2.596-0.44251 1.7321-1zm-3.4641 2-1.732 1c0.86603 0.5 2.596-0.44251 1.732-1zm-3.4641 2-1.732 1c0.86603 0.5 2.5959-0.44251 1.732-1zm-3.4641 2-1.732 1c0.86603 0.5 2.5959-0.44251 1.732-1zm-3.4641 2-1.732 1c0.86602 0.5 2.5959-0.44251 1.732-1zm-3.4641 2-1.732 1c0.86602 0.5 2.5959-0.44251 1.732-1z"
+                                        stroke="#008000" stroke-linejoin="round" />
+                                    <path
+                                        d="m305.25 32.5 1.732 1c-0.86602 0.5-2.5959-0.44251-1.732-1zm3.4641 2 1.732 1c-0.86602 0.5-2.5959-0.44251-1.732-1zm3.4641 2 1.732 1c-0.86603 0.5-2.5959-0.44251-1.732-1zm3.4641 2 1.732 1c-0.86603 0.5-2.5959-0.44251-1.732-1zm3.4641 2 1.732 1c-0.86602 0.5-2.5959-0.44251-1.732-1zm3.4641 2 1.732 1c-0.86602 0.5-2.5959-0.44251-1.732-1z"
+                                        stroke="#008000" stroke-linejoin="round" />
+                                </g>
+                                <g transform="translate(-20 19)" id="pcb-c2">
+                                    <path d="m138.11 58 0.86602-0.5v-2l-1.732-1-0.86603 0.5" stroke="#999999" />
+                                    <path d="m136.37 59 1.732-1v-2l-1.732-1-1.7321 1" stroke="#808000" />
+                                    <path d="m134.64 56-0.86602 0.5v2l1.732 1 0.86602-0.5" stroke="#b3b3b3" />
+                                    <path d="m136.37 55 1.7321 1v2l-1.7321 1v-2l-1.732-1 1.732-1" stroke="#808000" />
+                                </g>
+                                <g transform="translate(-12 24)" id="pcb-c3">
+                                    <path d="m138.11 58 0.86602-0.5v-2l-1.732-1-0.86603 0.5" stroke="#999999" />
+                                    <path d="m136.37 59 1.732-1v-2l-1.732-1-1.7321 1" stroke="#808000" />
+                                    <path d="m134.64 56-0.86602 0.5v2l1.732 1 0.86602-0.5" stroke="#b3b3b3" />
+                                    <path d="m136.37 55 1.7321 1v2l-1.7321 1v-2l-1.732-1 1.732-1" stroke="#808000" />
+                                </g>
+                                <g transform="translate(-19 -8)" id="pcb-r1">
+                                    <path d="m66.225 60.5-0.86603-0.5-2.5981 1.5v1l0.86603 0.5" stroke="#999999" />
+                                    <path d="m69.689 62.5 0.86602 0.5v1l-2.5981 1.5-0.86603-0.5" stroke="#999999" />
+                                    <path d="m69.689 62.5-3.4641-2-2.5981 1.5v1l3.4641 2v-1z" stroke="#d050d0" />
+                                </g>
+                                <g transform="translate(73 8)" id="pcb-r2">
+                                    <path d="m66.225 60.5-0.86603-0.5-2.5981 1.5v1l0.86603 0.5" stroke="#999999" />
+                                    <path d="m69.689 62.5 0.86602 0.5v1l-2.5981 1.5-0.86603-0.5" stroke="#999999" />
+                                    <path d="m69.689 62.5-3.4641-2-2.5981 1.5v1l3.4641 2v-1z" stroke="#d050d0" />
+                                </g>
+                                <g transform="translate(-5.9 15.5)" id="pcb-r3">
+                                    <path d="m66.225 60.5-0.86603-0.5-2.5981 1.5v1l0.86603 0.5" stroke="#999999" />
+                                    <path d="m69.689 62.5 0.86602 0.5v1l-2.5981 1.5-0.86603-0.5" stroke="#999999" />
+                                    <path d="m69.689 62.5-3.4641-2-2.5981 1.5v1l3.4641 2v-1z" stroke="#d050d0" />
+                                </g>
+                                <g transform="translate(-208.5 53.5)" id="pcb-j2">
+                                    <path
+                                        d="m239.51 33.401 14.64-8.4008c0.68478-0.39769 1.0385-0.38892 1.732 0l8.6603 5c2.3666 1.3677 2.6659 3.438 1.732 4l-14.722 8.5"
+                                        stroke="#808000" />
+                                    <path
+                                        d="m242.89 34.5c-0.21439-0.12379 4.6188 2.6667 6.9282 4m-6.9282-3 6.9282 4m-6.9282-5v2l6.9282 4 1.2994-0.74276"
+                                        stroke="#afaf40" />
+                                    <path d="m249.82 40.5v-2" stroke="#afaf40" />
+                                    <g stroke="#808000">
+                                        <path
+                                            d="m249.82 42.5-8.6602-5c-2.5981-1.5-2.5981-5.5 0-4l8.6602 5c2.5981 1.5 2.5981 5.5 0 4z" />
+                                        <path d="m254.15 41 0.86602 0.5 2.5981-1.5-0.86603-0.5" />
+                                        <path d="m260.21 37.5 0.86602 0.5 2.5981-1.5-0.86603-0.5" />
+                                    </g>
+                                </g>
+                            </g>
+                        </svg>
+
+                    </div>
+                    <div style="flex:3; min-width: 400px;">
+                        <p class="text-in-right">From prototype to production</p>
+                        <p class="text-in-right" style="margin-bottom:0;">Experience in: </p>
+                        <p class="text-in-right" style="margin-left:2vw; margin-top:0;">
+                            <font class="font-blue">instrumentation</font>,<br />
+                            <font class="font-orange">power electronics</font>,
+                            and <font class="font-green">aerospace avionics</font> design
+                        </p>
+                    </div>
+                </div>
+
+                <style>
+                    html:not([data-scroll='0']) {
+                        padding-top: 3em;
+                    }
+
+                    html:not([data-scroll='0']) header {
+                        position: fixed;
+                    }
+                </style>
+
+
+                <script>
+                    const pcbInfo = [
+                        { id: "#pcb-base", x: 0, y: 0, offx: 0, offy: 30 },
+                        { id: "#pcb-c1", x: -85.568, y: -21.5, offx: -20, offy: -40 },
+                        { id: "#pcb-ec1", x: -288.22, y: - 20.5, offx: 0, offy: -38 },
+                        { id: "#pcb-j1", x: -11, y: 58.5, offx: 30, offy: -40 },
+                        { id: "#pcb-u1", x: 8.8, y: 2, offx: -17, offy: -65 },
+                        { id: "#pcb-uc", x: -210, y: 14, offx: 0, offy: -92 },
+                        { id: "#pcb-c2", x: -20, y: 19, offx: 0, offy: -95 },
+                        { id: "#pcb-c3", x: -12, y: 24, offx: 0, offy: -110 },
+                        { id: "#pcb-r1", x: -19, y: - 8, offx: 0, offy: -90 },
+                        { id: "#pcb-r2", x: 73, y: 8, offx: 10, offy: -110 },
+                        { id: "#pcb-r3", x: -5.9, y: 15.5, offx: -5, offy: -95 },
+                        { id: "#pcb-j2", x: -208.5, y: 53.5, offx: -30, offy: -110 },
+                    ];
+                    pcbInfo.forEach((c) => {
+                        KUTE.to(c.id,
+                            { translateX: c.x + c.offx, translateY: c.y + c.offy },
+                            { duration: 1 }
+                        ).start();
+                    });
+
+                    var pcbRect = document.getElementById("pcb").getBoundingClientRect();
+                    function registerPCBScroll() {
+                        if (window.scrollY + screen.height > pcbRect.bottom) {
+                            console.log("Hello");
+                            document.removeEventListener('scroll', registerPCBScroll);
+                            var firstTween;
+                            var lastTween;
+                            var nextTween;
+                            pcbInfo.forEach((c) => {
+                                if (c.id === "#pcb-base") {
+                                    return;
+                                }
+                                nextTween = KUTE.to(c.id,
+                                    { translateX: c.x, translateY: c.y },
+                                    { duration: 500, easing: 'easingCubicOut' });
+                                if (firstTween) {
+                                    lastTween.chain(nextTween);
+                                    lastTween = nextTween;
+                                } else {
+                                    firstTween = nextTween;
+                                    lastTween = nextTween;
+                                }
+                            });
+                            nextTween = KUTE.to("#pcb-base",
+                                { translateX: 0, translateY: 0 },
+                                { duration: 1000, easing: 'easingCubicOut' });
+                            lastTween.chain(nextTween);
+                            firstTween.start();
+                        }
+                    }
+                    document.addEventListener('scroll', registerPCBScroll, { passive: true });
+                </script>
+
+                <h2 class="text-in-left" style="margin: 0; margin-top: 1vw; margin-left: 5vw">
+                    building the <font class="font-yellow">future of automation</font>
+                </h2>
+                <div
+                    style="display: flex; flex-direction: row; flex-wrap:wrap-reverse; justify-content: space-around; align-items: center;">
+                    <div style="flex:4; min-width: 400px;">
+                        <p class="text-in-left" style="margin-bottom:0;">multidisciplinary with experience in:</p>
+                        <p class="text-in-left" style="margin-left:2vw; margin-top:0;">
+                            <font class="font-orange">mechatronics</font>,
+                            <font class="font-green">control theory</font>, <br />
+                            and <font class="font-blue">simulation</font>
+                        </p>
+                        <p class="text-in-left">Leetware's engineering-heavy background unlocks high performing quality
+                            solutions</p>
+                    </div>
+                    <div style="flex:4; min-width: 400px; margin-left: auto;">
+
+                        <!-- </div> -->
+
+                        <div class="text-in-right" style="aspect-ratio: 560/315;">
+                            <iframe width="100%" height="100%" src="https://www.youtube-nocookie.com/embed/WbKPeB-FCEU"
+                                frameborder="0" allowfullscreen></iframe>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <script src="https://player.vimeo.com/api/player.js"></script>
+
+        <section class="about" style="padding-bottom:15vw;" id="about">
+            <div class="services-spacer" style="top:3vw; transform:scaleY(-1);">
+                <svg id=" visual" viewBox="0 0 900 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
+                    xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
+
+                    <path
+                        d="M0 110L50 102.2C100 94.3 200 78.7 300 77.5C400 76.3 500 89.7 600 88.3C700 87 800 71 850 63L900 55L900 33L850 37.5C800 42 700 51 600 45.8C500 40.7 400 21.3 300 27.5C200 33.7 100 65.3 50 81.2L0 97Z"
+                        fill="#00151f" fill-opacity="0.55"></path>
+                    <path
+                        d="M0 115L50 112C100 109 200 103 300 105.3C400 107.7 500 118.3 600 114.8C700 111.3 800 93.7 850 84.8L900 76L900 53L850 61C800 69 700 85 600 86.3C500 87.7 400 74.3 300 75.5C200 76.7 100 92.3 50 100.2L0 108Z"
+                        fill="#00151f" fill-opacity="0.8"></path>
+                    <path
+                        d="M0 127L50 127C100 127 200 127 300 131C400 135 500 143 600 142C700 141 800 131 850 126L900 121L900 74L850 82.8C800 91.7 700 109.3 600 112.8C500 116.3 400 105.7 300 103.3C200 101 100 107 50 110L0 113Z"
+                        fill="#00151f"></path>
+                </svg>
+            </div>
+            <h1 style="position:relative; margin-top:-8vw;">
+                About
+            </h1>
+
+            <div class="inner-content">
+                <p class="text-in-left">
+                    In 2020, Hoani Bryson started Leetware believing that life is too
+                    short to build substandard or unneccesary products.
+                </p>
+
+
+                <div style="display:flex; flex-wrap: wrap; justify-content: center;">
+                    <div style="flex:2; text-align: center; min-width: 30vmax;">
+                        <h2 class="text-in-left" style="margin:0">
+                            Hoani Bryson
+                        </h2>
+                        <p class="text-in-left small" style="margin:0;">
+                            founder
+                        </p>
+                        <img class="text-in-left" src="assets/Hoani.jpg"
+                            style="padding-left: auto; margin-right: 0; border-radius: 50%; max-width:240px; width:20vw; border: 0.5vw solid #000;"></img>
+                    </div>
+                    <div style="flex:3; min-width: 300px; margin:auto;">
+                        <div style="height:100%;">
+                            <p class="text-in-right" style="margin: 0; margin-left:auto; text-align: left;">
+                                Hoani has an eclectic mix of engineering proficiencies:
+                            </p>
+                            <p class="text-in-right"
+                                style="margin:0; margin-left:auto; padding-left:2vw;text-align: left;">
+                                <font class="font-orange">embedded software</font>,
+                                <font class="font-red">services architecture</font>,
+                            </p>
+                            <p class="text-in-right"
+                                style="margin:0; margin-left:auto; padding-left:2vw;text-align: left;">
+                                <font class="font-green">simulation design</font>,
+                                <font class="font-yellow">control systems</font>,
+                            </p>
+                            <p class="text-in-right"
+                                style="margin:0; margin-left:auto; padding-left:2vw;text-align: left;">
+                                <font class="font-blue">blockchain</font>,
+                                <font class="font-purple">avionics design</font>,
+                            </p>
+                            <p class="text-in-right"
+                                style="margin:0; margin-left:auto; padding-left:2vw;text-align: left;">
+                                <font class="font-orange">GNC engineering</font>,
+                                and <font class="font-blue">robotics</font>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div style="min-height:5vw;"></div>
+                <div style="display:flex; flex-wrap: wrap; justify-content: center;">
+                    <div style="margin-left:5vw;"></div>
+                    <div style=" margin-left:0vw;">
+                        <p class="text-in-right" style="margin:0; margin-left:2vw; text-align: left;">
+                            <font class="font-orange">Masters degree with distinction</font> in rocket control
+                            systems
+                        </p>
+                        <p class="text-in-right" style="margin:0; margin-left:2vw; text-align: left;">
+                            a PSMII certified <font class="font-red">Scrum master</font>
+                        </p>
+                        <p class="text-in-right" style="margin:0; margin-left:2vw; text-align: left;">
+                            an <font class="font-blue">avid reader</font> of agile and software textbooks
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <style>
+            .contact-divider {
+                position: relative;
+
+                left: 0;
+                width: 100%;
+                overflow: visible;
+                line-height: 0;
+                transform: rotate(180deg);
+            }
+
+            .contact-divider svg {
+                position: relative;
+                display: block;
+                width: calc(100% + 1.3px);
+                height: 64px;
+            }
+
+            .contact-divider .shape-fill {
+                fill: var(--bg-primary);
+            }
+
+            .contact {
+                margin-top: -64px;
+            }
+
+            .contact h1 {
+                width: 100%;
+                padding: 0;
+                margin: 0;
+                text-align: center;
+                margin-left: auto;
+                margin-right: auto;
+                background: var(--bg-primary);
+            }
+
+            .contact-content {
+                display: flex;
+                flex-direction: row;
+                align-items: stretch;
+                width: 100%;
+                justify-content: center;
+                background: var(--bg-primary);
+                padding-bottom: 7vh;
+                padding-top: 5vh
+            }
+
+            .contact-details-container,
+            .contact-form-container {
+                flex: 1;
+                margin-left: 5vw;
+                margin-right: 5vw;
+            }
+
+            #contact-form {
+                max-width: 460px;
+                margin: 0;
+                margin-left: auto;
+            }
+
+            .contact-details-container {
+                display: flex;
+                flex-direction: column;
+            }
+
+            @media only screen and (max-width: 1199px) {
+                .contact-content {
+                    flex-direction: column;
+                    justify-content: center;
+                }
+
+                #contact-form {
+                    margin-left: auto;
+                    margin-right: auto;
+                }
+
+                .contact-details-container {
+                    margin-top: 10vh;
+                    text-align: center;
+                }
+            }
+        </style>
+        <section class="contact" id="contact">
+            <div class="contact-divider">
+                <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
+                    preserveAspectRatio="none">
+                    <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
+                </svg>
+            </div>
+            <!-- <div style="width:100%; "> -->
+            <h1>Contact</h1>
+            <!-- </div> -->
+            <div class="contact-content">
+                <div style="flex:1">
+                    <form method="POST" id="contact-form" action="https://formspree.io/f/mnqwldej" target="_blank">
+                        <div class="contact-hpot">
+                            <label>Leave this field empty: <input name="_gotcha"></label>
+                        </div>
+                        <input name="name" type="text" class="feedback-input" placeholder="Name" />
+                        <input name="email" type="text" class="feedback-input" placeholder="Email" />
+                        <textarea name="text" class="feedback-input" placeholder="Comment"></textarea>
+                        <button class="contact-button" role="button" type="submit"><span>SEND</span></button>
+                    </form>
+                </div>
+                <div class="contact-details-container">
+                    <h2 style="margin:0;">Leetware Limited</h2>
+                    <p style="margin:0">Mt Wellington, Auckland</p>
+                    <p class="small">hoani@leetware.co.nz</p>
+                    <p style="margin-top:auto;margin-bottom:0;line-height: 4rem;">
+                        <a href="https://www.linkedin.com/company/leet-nz" target="_blank">LinkedIn</a>
+                        &mdash;
+                        <a href="https://www.youtube.com/channel/UC_hv2IPy6vSLAJkJnOSsOrw" target="_blank">Youtube</a>
+                        &mdash;
+                        <a href="https://github.com/leetnz" target="_blank">Github</a>
+                    </p>
+                </div>
+            </div>
+
+            <script>
+                const observer = new IntersectionObserver(entries => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            if (entry.target.classList.contains('text-in-left')) {
+                                entry.target.classList.add('left-in-animation');
+                            }
+                            if (entry.target.classList.contains('text-in-right')) {
+                                entry.target.classList.add('right-in-animation');
+                            }
+                            if (entry.target.classList.contains('macbook')) {
+                                entry.target.classList.add('macbook-enter');
+                            }
+                            if (entry.target.classList.contains('circuitboard')) {
+                                entry.target.classList.add('left-in-animation');
+                            }
+                        }
+                    });
+                });
+
+                // Tell the observer which elements to track
+
+                document.querySelectorAll('.text-in-right').forEach(element => observer.observe(element));
+                document.querySelectorAll('.text-in-left').forEach(element => observer.observe(element));
+                document.querySelectorAll('.macbook').forEach(element => observer.observe(element));
+                document.querySelectorAll('.circuitboard').forEach(element => observer.observe(element));
+            </script>
+    </main>
+</body>
+
+</html>
