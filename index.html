@@ -12,311 +12,24 @@
     <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css" />
     <script defer src="https://cdn.jsdelivr.net/npm/kute.js@2.2.2/dist/kute.min.js"
-        integrity="sha256-B/f4sxh5Z2Cm4ampEByxvbOCINmpxPkM43pR1PIwagk=" crossorigin="anonymous" onload="startKute();">
-        </script>
+        integrity="sha256-B/f4sxh5Z2Cm4ampEByxvbOCINmpxPkM43pR1PIwagk=" crossorigin="anonymous"
+        onload="startKute();"></script>
 
     <script>
         var kuteRegistry = [];
+        var kuteStarted = false;
         function registerKute(cb) {
-            kuteRegistry.push(cb);
+            if (kuteStarted) {
+                cb();
+            } else {
+                kuteRegistry.push(cb);
+            }
         }
         function startKute() {
+            kuteStarted = true;
             kuteRegistry.forEach((cb) => cb());
         }
     </script>
-
-    <style>
-        h1 {
-            text-shadow: -1px -1px 0 #333, 1px -1px 0 #333, -1px 1px 0 #333, 1px 1px 0 #333;
-            z-index: 1;
-        }
-
-        h2 {
-            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            z-index: 1;
-        }
-
-
-        p {
-            text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000;
-            z-index: 1;
-        }
-
-        a,
-        a:visited {
-            color: #aabbff;
-            text-decoration: none;
-        }
-
-        a:hover {
-            color: #d0d0ff;
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            .left-in-animation {
-                animation-name: left-enter;
-                animation-duration: 1s;
-                animation-iteration-count: 1;
-            }
-        }
-
-        @keyframes left-enter {
-            0% {
-                transform: scale(0, .025);
-                transform: translateX(-100vw);
-            }
-
-            50% {
-                transform: scale(1, .025);
-                transform: translateX(0);
-            }
-        }
-
-        @media (prefers-reduced-motion: no-preference) {
-            .right-in-animation {
-                animation-name: right-enter;
-                animation-duration: 1s;
-                animation-iteration-count: 1;
-            }
-        }
-
-        @keyframes right-enter {
-            0% {
-                transform: scale(0, .025);
-                transform: translateX(100vw);
-            }
-
-            50% {
-                transform: scale(1, .025);
-                transform: translateX(0);
-            }
-        }
-
-
-
-        @media (prefers-reduced-motion: no-preference) {
-            .square-animation {
-                animation-name: wipe-enter;
-                animation-duration: 1s;
-                animation-iteration-count: 1;
-            }
-        }
-
-        @keyframes wipe-enter {
-            0% {
-                transform: scale(0, .025);
-            }
-
-            50% {
-                transform: scale(1, .025);
-            }
-        }
-
-        body {
-            margin: 0;
-            font-family: 'Roboto', sans-serif;
-            color: white;
-            background: #000;
-            overflow-x: hidden;
-        }
-
-        section {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            overflow-x: hidden;
-        }
-
-
-
-
-
-        .services {
-            position: relative;
-            margin-top: -6vw;
-            width: 100%;
-            padding-bottom: 8vw;
-        }
-
-        .services::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            min-width: 100%;
-            min-height: 100%;
-            background-image: url("assets/services.webp");
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            filter: brightness(0.25);
-            z-index: -1;
-        }
-
-        .about {
-            position: relative;
-            margin-top: -8vw;
-            width: 100%;
-        }
-
-        .about::before {
-            content: "";
-            position: absolute;
-            top: 0;
-            left: 0;
-            min-width: 100%;
-            min-height: 100%;
-            background-image: url("assets/about.webp");
-            background-attachment: fixed;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-size: cover;
-            filter: brightness(0.45);
-            z-index: -5;
-        }
-
-        .water {
-            background: var(--waterg2);
-            overflow-y: hidden;
-            min-height: 100vh;
-            height: 65vw;
-        }
-
-        .city {
-            position: absolute;
-            top: 0;
-            aspect-ratio: 776.25/419.16;
-            pointer-events: none;
-            /* width: 100%; */
-            height: 100%;
-            /* height: 54vw; */
-            /* padding-top: 5%; */
-        }
-
-        .city-spacer {
-            position: absolute;
-            /* display: block; */
-            aspect-ratio: 776.25/419.16;
-            height: 100%;
-
-            background-repeat: no-repeat;
-            background-position-x: center;
-            background-position-y: bottom;
-            background-size: cover;
-            background-attachment: fixed;
-        }
-
-
-        #city-sky {
-            position: absolute;
-            top: 0;
-
-            width: 100%;
-            height: 61%;
-            background: var(--skyg1);
-            /* Old browsers */
-            background: -moz-linear-gradient(180deg, var(--skyg1) 0%, var(--skyg2) 90%);
-            /* FF3.6-15 */
-            background: -webkit-linear-gradient(180deg, var(--skyg1) 0%, var(--skyg2) 90%);
-            /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(180deg, var(--skyg1) 0%, var(--skyg2) 90%);
-
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=var(--skyg1), endColorstr=var(--skyg2), GradientType=0);
-            /* IE6-9 */
-            overflow: hidden;
-        }
-
-        #city-water {
-            position: absolute;
-            bottom: 0;
-
-            width: 100%;
-            height: 39%;
-            background: var(--waterg2);
-            /* Old browsers */
-            background: -moz-linear-gradient(-180deg, var(--waterg1) 0%, var(--waterg2) 100%);
-            /* FF3.6-15 */
-            background: -webkit-linear-gradient(-180deg, var(--waterg1) 0%, var(--waterg2) 100%);
-            /* Chrome10-25,Safari5.1-6 */
-            background: linear-gradient(-180deg, var(--waterg1) 0%, var(--waterg2) 100%);
-
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=var(--waterg1), endColorstr=var(--waterg2), GradientType=0);
-            /* IE6-9 */
-            overflow: hidden;
-        }
-
-        #city-layer0,
-        #city-layer1,
-        #city-layer2 {
-            pointer-events: none;
-        }
-
-        .path-layer0 {
-            pointer-events: visible;
-            fill: var(--city0-fill);
-            stroke: var(--city0-line);
-            stroke-width: 2;
-            opacity: 0.7;
-        }
-
-
-        #city-layer0_17 {
-            stroke: var(--city0-fill);
-            fill: var(--city0-fill);
-            opacity: 1;
-        }
-
-        #city-layer1 path {
-            fill: var(--city1-fill);
-            stroke: var(--city1-line);
-            stroke-width: 1.5;
-            pointer-events: visible;
-            opacity: 0.7;
-        }
-
-        #city-layer2 path {
-            fill: var(--city2-fill);
-            stroke: var(--city2-line);
-            stroke-width: 1;
-            pointer-events: visible;
-            opacity: 0.8;
-        }
-
-        .city-layer3 path {
-            fill: var(--city3-fill);
-            opacity: 1;
-            stroke-width: 0;
-        }
-
-        .spacer {
-            aspect-ratio: 900/200;
-            width: 100%;
-            background-repeat: no-repeat;
-            background-position: center;
-            background-size: cover;
-        }
-
-
-
-        .services-spacer {
-            transform: rotate(180deg);
-            position: relative;
-            top: 1.5vw;
-            aspect-ratio: 900/160;
-            width: 100%;
-            contain: content;
-            overflow: visible;
-        }
-
-
-        .flip {
-            transform: rotate(180deg);
-        }
-    </style>
-
-
 </head>
 
 <body>
@@ -369,23 +82,8 @@
     <main>
         <section class="water">
             <div class="city">
-
-                <style>
-                    #city-stars svg {
-                        position: relative;
-                        height: 10px;
-                        width: 10px;
-                        top: 0;
-                        left: 0;
-                        background-repeat: no-repeat;
-                        background-position-x: center;
-                        background-position-y: center;
-                        background-attachment: fixed;
-                    }
-                </style>
-
                 <div id="city-sky">
-                    <div id="city-stars" style="height: 80%;width:100%;">
+                    <div id="city-stars">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 556 512" id="sky-star">
                             <defs id="star-defs">
                                 <radialGradient id="star-gradient">
@@ -398,54 +96,8 @@
                                 d="M381.2 150.3L524.9 171.5C536.8 173.2 546.8 181.6 550.6 193.1C554.4 204.7 551.3 217.3 542.7 225.9L438.5 328.1L463.1 474.7C465.1 486.7 460.2 498.9 450.2 506C440.3 513.1 427.2 514 416.5 508.3L288.1 439.8L159.8 508.3C149 514 135.9 513.1 126 506C116.1 498.9 111.1 486.7 113.2 474.7L137.8 328.1L33.58 225.9C24.97 217.3 21.91 204.7 25.69 193.1C29.46 181.6 39.43 173.2 51.42 171.5L195 150.3L259.4 17.97C264.7 6.954 275.9-.0391 288.1-.0391C300.4-.0391 311.6 6.954 316.9 17.97L381.2 150.3z" />
                         </svg>
                     </div>
-
-                    <script>
-                        const sky = document.getElementById("city-stars");
-                        var protoStar = document.getElementById("sky-star");
-                        var stars = [];
-                        for (var i = 0; i < 5; i++) {
-                            for (var j = 0; j < 5; j++) {
-                                var size = 0.5 + Math.random() * 1.5;
-
-                                var star = protoStar.cloneNode(true);
-                                star.style.top = `${j * 20 + Math.random() * 20}%`;
-                                star.style.left = `${i * 20 + Math.random() * 20}%`;
-                                star.style.height = `${size}vh`;
-                                star.style.width = `${size}vh`;
-                                star.style.filter = `blur(${size * 0.1}vh)`;
-                                star.id = `sky-star-${i}-${j}`;
-
-                                sky.appendChild(star);
-
-                                stars.push(star);
-                            }
-                        }
-
-                        registerKute(() => {
-                            stars.forEach((star) => {
-                                var twinkle;
-                                twinkle = KUTE.fromTo(star,
-                                    { opacity: 0.5 },
-                                    { opacity: 1 },
-                                    {
-                                        yoyo: true,
-                                        repeat: 1,
-                                        duration: 1000,
-                                        onComplete: () => {
-                                            setTimeout(() => {
-                                                twinkle.start();
-                                            }, 2000 + Math.random() * 10000);
-                                        },
-                                    },
-                                ).start();
-                            });
-                        });
-
-                    </script>
                 </div>
                 <div id="city-water"></div>
-
-
 
                 <svg class="city-spacer city-reflection" version="1.1" viewBox="0 0 776.25 419.16" xml:space="preserve"
                     style="filter:blur(0.1vw);" xmlns="http://www.w3.org/2000/svg">
@@ -483,26 +135,6 @@
                     </g>
                 </svg>
 
-                <script>
-                    registerKute(() => {
-                        var layer2Tween = KUTE.fromTo("#layer2", { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" });
-                        layer2Tween.start();
-
-                        document.getElementById('city-layer2').addEventListener("mouseover", function (event) {
-                            if (!layer2Tween.playing) {
-                                console.log("starting")
-                                var xPercent = event.pageX / window.innerWidth;
-                                var dir = (xPercent > 0.50) ? 1 : -1;
-                                var start1 = 30 - 90 * event.pageX / window.innerWidth - 5;
-                                var start2 = start1 + 10.0;
-                                layer2Tween = KUTE.fromTo("#layer2", { draw: `${start1}% ${start2}%` }, { draw: `${start1 + dir * 120}% ${start1 + dir * 120}%` }, { duration: 2500, easing: "easingCubicOut" });
-                                layer2Tween.start()
-                            }
-                        }, false);
-                    });
-                </script>
-
-
                 <svg class="city-spacer" id="city-layer1" version="1.1" viewBox="0 0 776.25 419.16" xml:space="preserve"
                     xmlns="http://www.w3.org/2000/svg">
                     <g transform="matrix(1.3333 0 0 -1.3333 0 419.16)" style="pointer-events: none;">
@@ -510,24 +142,6 @@
                             d="m549.25 179.45v1.5742h-9.666v57.188h-18.842v-50.691h-8.4453v8.0137h-9.9629v-8.0137h-1.7773v-0.7246h-3.7227v0.7246h-1.4141v-3.1816h-0.14844v3.1816h-1.3828v5.6328h-3.6055v-1.5176h-1.8105v-1.9492h-0.57227v-0.13477h-3.5742v0.13477h-4.8398v-1.9961h-0.44727v1.9961h-0.96094v5.8477h-1.0469v-3.1543h-5.1387v3.1543h-2.6816v-0.47266h-6.7012v0.47266h-1.3242v3.8984h-1.7285v-1.2441h-5.1367v1.2441h-1.3398v-0.72461h-2.4062v-5.123h-3.0293v-0.23633h-5.957v0.23633h-4.2441v-0.60938h-7.0723v0.60938h-0.48828v9.0957h-1.6328v10.828h-2.6348v-1.3965h-5.4102v-1.9414h-5.9648v1.9414h-1.9414v1.3965h-7.7539v24.703h-25.619v-29.588h-14.648v-0.70117h-6.2754v0.70117h-2.834v13.049h-0.89063v-0.6875h-3.4316v0.6875h-1.5703v19.914h-2.1953v-1.9492h-38.039v-18.076h-19.283v-11.166h-23.76v3.1895h-6.0137v7.9766h-19.109v29.848h-2.1152v-11.453h-7.418v-1.498h-6.1758v-29.717h-0.94532v-1.8223h-4.6055v1.3789h-0.53906v-0.30078h-4.5469v0.74414h-1.9395v-17.322h-3.3828v-0.56054h-1.916v-1.1973h-5.9199v1.7578h-2.2734v-0.32031h-5.4434v0.32031h-0.9043v13.881h-1.4297v3.4414h-3.4688v-0.32422h-4.1289v0.32422h-1.5274v-10.754h-1.6465v-2.6328h-0.41797v2.2773h-1.791v0.35547h-1.9726v-0.5957h-4.668v0.5957h-18.248v41.969h-11.254v-26.396h-28.744v26.396h-9.0371v-38.775h-24.516v-0.9043h-2.3262v0.9043h-0.92969v-5.4609h-0.18555v5.4609h-0.78711v8.2988h-4.4199v0.18945h-2.8809v-0.37304h-3.627v0.37304h-2.3145v30.287h-6.0332v-30.287h-3.2734v-4.6504h-0.37305v4.6504h-4.9277v-0.37304h-6.043v0.37304h-2.418v-1.3984h-2.8809v1.3984h-3.4414v-0.74804h-9.1113v0.74804h-4.2539v-21.76h-2.0684v-0.55664h-5.4863v0.55664h-1.2832v-3.8926h-3.0859v-0.47656h-1.3945v0.47656h-1.5801v-0.75586h-1.3945v0.75586h-0.97656v3.8926 21.76 48.609l772.97 0.43945v-20.506h-12.475v-10.445h-5.6133v-12.863h-13.211v23.309h-5.2578v-19.105h-12.1v-4.2031h-13.209v23.309h-14.812v-19.07h-13.211v19.07h-1.0547v-19.07h-13.211v19.07h-2.375v-32.258h-13.209v32.258h-83.896v-40.945h-4.3457v-1.0469h-6.3613v1.0469h-0.55664v-13.211h-4.4727v-4.6055h-6.6504z" />
                     </g>
                 </svg>
-
-                <script>
-                    registerKute(() => {
-                        var layer1Tween = KUTE.fromTo("#layer1", { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" });
-                        layer1Tween.start();
-
-                        document.getElementById('city-layer1').addEventListener("mouseover", function (event) {
-                            if (!layer1Tween.playing) {
-                                var xPercent = event.pageX / window.innerWidth;
-                                var dir = (xPercent > 0.50) ? 1 : -1;
-                                var start1 = 50 - 80 * event.pageX / window.innerWidth - 5;
-                                var start2 = start1 + 10.0;
-                                layer1Tween = KUTE.fromTo("#layer1", { draw: `${start1}% ${start2}%` }, { draw: `${start1 + dir * 120}% ${start1 + dir * 120}%` }, { duration: 1500, easing: "easingCubicOut" });
-                                layer1Tween.start()
-                            }
-                        }, false);
-                    });
-                </script>
 
                 <svg class="city-spacer" id="city-layer0" version="1.1" viewBox="0 0 776.25 419.16" xml:space="preserve"
                     xmlns="http://www.w3.org/2000/svg">
@@ -573,31 +187,7 @@
                         </g>
                     </g>
                 </svg>
-
-                <script>
-                    registerKute(() => {
-                        const numBuildings = 17;
-                        var layer0Tweens = [];
-                        for (let i = 0; i < numBuildings; i++) {
-                            const id = `city-layer0_${i}`;
-                            layer0Tweens.push(KUTE.fromTo(`#${id}`, { draw: '0% 0%' }, { draw: '0% 0%' }, { duration: 0, easing: "easingCubicIn" }));
-                            layer0Tweens[i].start();
-
-                            document.getElementById(id).addEventListener("mouseover", function (event) {
-                                const xPercent = event.pageX / window.innerWidth;
-                                const dir = (xPercent > 0.50) ? 1 : -1;
-
-                                if (!layer0Tweens[i].playing) {
-                                    layer0Tweens[i] = KUTE.fromTo(`#${id}`, { draw: `${-10 + dir * 40}% ${10 + dir * 40}%` }, { draw: `${dir * 140}% ${dir * 140}%` }, { duration: 1000, offset: 20, easing: "easingCubicOut" });
-                                    layer0Tweens[i].start()
-                                }
-                            }, false);
-                        }
-                    });
-                </script>
             </div>
-
-
             <div style="position: relative; height: 100%; pointer-events: none;">
                 <h2 style="text-align: right; margin-left: auto; margin-right:20vw; margin-top:10vh; width:100%; ">
                     we engineer <font class="font-blue">technology</font><br>
@@ -605,33 +195,12 @@
                     and meet <font class="font-red">deadlines</font>
                 </h2>
             </div>
-
         </section>
-        <style>
-            @media (prefers-reduced-motion: no-preference) {
-                .macbook-enter {
-                    animation-name: right-enter;
-                    animation-duration: 1s;
-                    animation-iteration-count: 1;
-                }
-            }
-
-            @keyframes right-enter {
-                0% {
-                    transform: translateX(100vw);
-                }
-
-                100% {
-                    transform: translateX(0px);
-                }
-            }
-        </style>
 
         <section class="services" id="services">
             <div class="services-spacer">
                 <svg id="visual" viewBox="0 0 900 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
                     xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1">
-
                     <path
                         d="M0 110L50 102.2C100 94.3 200 78.7 300 77.5C400 76.3 500 89.7 600 88.3C700 87 800 71 850 63L900 55L900 33L850 37.5C800 42 700 51 600 45.8C500 40.7 400 21.3 300 27.5C200 33.7 100 65.3 50 81.2L0 97Z"
                         fill="#00151f" fill-opacity="0.55"></path>
@@ -641,7 +210,6 @@
                     <path
                         d="M0 127L50 127C100 127 200 127 300 131C400 135 500 143 600 142C700 141 800 131 850 126L900 121L900 74L850 82.8C800 91.7 700 109.3 600 112.8C500 116.3 400 105.7 300 103.3C200 101 100 107 50 110L0 113Z"
                         fill="#00151f"></path>
-
                 </svg>
             </div>
 
@@ -788,76 +356,6 @@
                         </svg>
                     </div>
                 </div>
-
-                <script>
-                    registerKute(() => {
-                        const maclogo = document.getElementById("maclogo");
-                        var xspeed = 4;
-                        var yspeed = 3;
-                        var xpos = Math.floor(Math.random() * 10) * xspeed;
-                        var ypos = Math.floor(Math.random() * 5) * yspeed;
-
-                        var angle = 0;
-                        const logos = ["logo-cpp", "logo-go", "logo-rust", "logo-flutter", "logo-py"];
-                        var logoIndex = 0;
-
-                        function switchLogo() {
-                            var current = document.getElementById(logos[logoIndex]);
-                            logoIndex = (logoIndex + 1 + Math.floor(Math.random() * (logos.length - 2))) % logos.length;
-                            angle += 180;
-                            KUTE.to(current, { rotate: angle }, {
-                                duration: 100,
-                                easing: "easingCubicIn",
-                                onComplete: () => {
-                                    current.style.visibility = "hidden";
-                                    var next = document.getElementById(logos[logoIndex]);
-                                    next.style.visibility = "visible";
-                                    angle += 180;
-                                    KUTE.to(next, { rotate: angle }, { duration: 100, easing: "easingCubicOut" }).start()
-                                }
-                            }).start();
-                        }
-
-                        var moveTween = KUTE.to("#maclogo",
-                            { scale: 1 },
-                            { duration: 1, onComplete: updatePos }
-                        ).start();
-
-                        const colors = ["#fa8", "#ee4", "#4f4", "#0ff", "#bcf", "#f8f"];
-                        var colorIndex = 0;
-                        maclogo.style.stroke = colors[colorIndex];
-
-                        function updatePos() {
-                            const xoffset = -52;
-                            const yoffset = -120;
-
-                            var bounce = false;
-
-                            if ((xspeed > 0 && xpos > 576) || (xspeed < 0 && xpos < 0)) {
-                                xspeed = -xspeed;
-                                bounce = true;
-                            }
-                            if ((yspeed > 0 && ypos > 280) || (yspeed < 0 && ypos < 0)) {
-                                yspeed = -yspeed;
-                                bounce = true;
-                            }
-                            xpos += xspeed;
-                            ypos += yspeed;
-
-                            if (bounce) {
-                                switchLogo();
-                                colorIndex = (colorIndex + 1) % colors.length;
-                                maclogo.style.stroke = colors[colorIndex];
-                            }
-
-
-                            moveTween = KUTE.to("#maclogo",
-                                { translateX: xoffset + xpos, translateY: yoffset + ypos, scale: 1 },
-                                { duration: 30, onComplete: updatePos }
-                            ).start();
-                        }
-                    });
-                </script>
 
                 <h2 class="text-in-right"
                     style="margin-top: 5vw; margin-bottom: 0; margin-right: 5vw; margin-left:auto; text-align: right;">
@@ -1024,74 +522,6 @@
                     </div>
                 </div>
 
-                <style>
-                    html:not([data-scroll='0']) {
-                        padding-top: 3em;
-                    }
-
-                    html:not([data-scroll='0']) header {
-                        position: fixed;
-                    }
-                </style>
-
-
-                <script>
-                    registerKute(() => {
-                        const pcbInfo = [
-                            { id: "#pcb-base", x: 0, y: 0, offx: 0, offy: 30 },
-                            { id: "#pcb-c1", x: -85.568, y: -21.5, offx: -20, offy: -40 },
-                            { id: "#pcb-ec1", x: -288.22, y: - 20.5, offx: 0, offy: -38 },
-                            { id: "#pcb-j1", x: -11, y: 58.5, offx: 30, offy: -40 },
-                            { id: "#pcb-u1", x: 8.8, y: 2, offx: -17, offy: -65 },
-                            { id: "#pcb-uc", x: -210, y: 14, offx: 0, offy: -92 },
-                            { id: "#pcb-c2", x: -20, y: 19, offx: 0, offy: -95 },
-                            { id: "#pcb-c3", x: -12, y: 24, offx: 0, offy: -110 },
-                            { id: "#pcb-r1", x: -19, y: - 8, offx: 0, offy: -90 },
-                            { id: "#pcb-r2", x: 73, y: 8, offx: 10, offy: -110 },
-                            { id: "#pcb-r3", x: -5.9, y: 15.5, offx: -5, offy: -95 },
-                            { id: "#pcb-j2", x: -208.5, y: 53.5, offx: -30, offy: -110 },
-                        ];
-                        pcbInfo.forEach((c) => {
-                            KUTE.to(c.id,
-                                { translateX: c.x + c.offx, translateY: c.y + c.offy },
-                                { duration: 1 }
-                            ).start();
-                        });
-
-                        var pcbRect = document.getElementById("pcb").getBoundingClientRect();
-                        function registerPCBScroll() {
-                            if (window.scrollY + screen.height > pcbRect.bottom) {
-                                console.log("Hello");
-                                document.removeEventListener('scroll', registerPCBScroll);
-                                var firstTween;
-                                var lastTween;
-                                var nextTween;
-                                pcbInfo.forEach((c) => {
-                                    if (c.id === "#pcb-base") {
-                                        return;
-                                    }
-                                    nextTween = KUTE.to(c.id,
-                                        { translateX: c.x, translateY: c.y },
-                                        { duration: 500, easing: 'easingCubicOut' });
-                                    if (firstTween) {
-                                        lastTween.chain(nextTween);
-                                        lastTween = nextTween;
-                                    } else {
-                                        firstTween = nextTween;
-                                        lastTween = nextTween;
-                                    }
-                                });
-                                nextTween = KUTE.to("#pcb-base",
-                                    { translateX: 0, translateY: 0 },
-                                    { duration: 1000, easing: 'easingCubicOut' });
-                                lastTween.chain(nextTween);
-                                firstTween.start();
-                            }
-                        }
-                        document.addEventListener('scroll', registerPCBScroll, { passive: true });
-                    });
-                </script>
-
                 <h2 class="text-in-left" style="margin: 0; margin-top: 1vw; margin-left: 5vw">
                     building the <font class="font-yellow">future of automation</font>
                 </h2>
@@ -1127,10 +557,6 @@
                 </div>
             </div>
         </section>
-
-
-        <script src="https://player.vimeo.com/api/player.js"></script>
-
         <section class="about" style="padding-bottom:15vw;" id="about">
             <div class="services-spacer" style="top:3vw; transform:scaleY(-1);">
                 <svg id=" visual" viewBox="0 0 900 160" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg"
@@ -1166,8 +592,8 @@
                         <p class="text-in-left small" style="margin:0;">
                             founder
                         </p>
-                        <img class="text-in-left" src="assets/Hoani.jpg"
-                            style="padding-left: auto; margin-right: 0; border-radius: 50%; max-width:240px; width:20vw; border: 0.5vw solid #000;"></img>
+                        <img class="text-in-left" src="assets/Hoani.jpg" width="240px" height="240px"
+                            style="padding-left: auto; margin-right: 0; border-radius: 50%; aspect-ratio:1/1; min-width:240px; border: 0.5vw solid #000;"></img>
                     </div>
                     <div style="flex:3; min-width: 300px; margin:auto;">
                         <div style="height:100%;">
@@ -1215,88 +641,6 @@
                 </div>
             </div>
         </section>
-        <style>
-            .contact-divider {
-                position: relative;
-
-                left: 0;
-                width: 100%;
-                overflow: visible;
-                line-height: 0;
-                transform: rotate(180deg);
-            }
-
-            .contact-divider svg {
-                position: relative;
-                display: block;
-                width: calc(100% + 1.3px);
-                height: 64px;
-            }
-
-            .contact-divider .shape-fill {
-                fill: var(--bg-primary);
-            }
-
-            .contact {
-                margin-top: -64px;
-            }
-
-            .contact h1 {
-                width: 100%;
-                padding: 0;
-                margin: 0;
-                text-align: center;
-                margin-left: auto;
-                margin-right: auto;
-                background: var(--bg-primary);
-            }
-
-            .contact-content {
-                display: flex;
-                flex-direction: row;
-                align-items: stretch;
-                width: 100%;
-                justify-content: center;
-                background: var(--bg-primary);
-                padding-bottom: 7vh;
-                padding-top: 5vh
-            }
-
-            .contact-details-container,
-            .contact-form-container {
-                flex: 1;
-                margin-left: 5vw;
-                margin-right: 5vw;
-            }
-
-            #contact-form {
-                max-width: 460px;
-                margin: 0;
-                margin-left: auto;
-            }
-
-            .contact-details-container {
-                display: flex;
-                flex-direction: column;
-            }
-
-            @media only screen and (max-width: 1199px) {
-                .contact-content {
-                    flex-direction: column;
-                    justify-content: center;
-                }
-
-                #contact-form {
-                    margin-left: auto;
-                    margin-right: auto;
-                }
-
-                .contact-details-container {
-                    margin-top: 10vh;
-                    text-align: center;
-                }
-            }
-        </style>
         <section class="contact" id="contact">
             <div class="contact-divider">
                 <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"
@@ -1304,9 +648,7 @@
                     <path d="M1200 120L0 16.48 0 0 1200 0 1200 120z" class="shape-fill"></path>
                 </svg>
             </div>
-            <!-- <div style="width:100%; "> -->
             <h1>Contact</h1>
-            <!-- </div> -->
             <div class="contact-content">
                 <div style="flex:1">
                     <form method="POST" id="contact-form" action="https://formspree.io/f/mnqwldej" target="_blank">
@@ -1332,35 +674,8 @@
                     </p>
                 </div>
             </div>
-
-            <script>
-                const observer = new IntersectionObserver(entries => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            if (entry.target.classList.contains('text-in-left')) {
-                                entry.target.classList.add('left-in-animation');
-                            }
-                            if (entry.target.classList.contains('text-in-right')) {
-                                entry.target.classList.add('right-in-animation');
-                            }
-                            if (entry.target.classList.contains('macbook')) {
-                                entry.target.classList.add('macbook-enter');
-                            }
-                            if (entry.target.classList.contains('circuitboard')) {
-                                entry.target.classList.add('left-in-animation');
-                            }
-                        }
-                    });
-                });
-
-                // Tell the observer which elements to track
-
-                document.querySelectorAll('.text-in-right').forEach(element => observer.observe(element));
-                document.querySelectorAll('.text-in-left').forEach(element => observer.observe(element));
-                document.querySelectorAll('.macbook').forEach(element => observer.observe(element));
-                document.querySelectorAll('.circuitboard').forEach(element => observer.observe(element));
-            </script>
     </main>
+    <script type="module" src="/main.js"></script>
 </body>
 
 </html>
