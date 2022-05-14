@@ -327,6 +327,21 @@ section {
     transform: rotate(180deg);
 }
 
+.waves-spacer {
+    transform: rotate(180deg);
+    position: relative;
+    top: 1.5vw;
+    aspect-ratio: 900/160;
+    width: 100%;
+    contain: content;
+    overflow: visible;
+}
+
+.waves-heading {
+    position: relative;
+    margin-top: -8vw;
+}
+
 /*
  * Animations
  */
@@ -525,16 +540,6 @@ section {
     background-size: cover;
     filter: brightness(0.25);
     z-index: -1;
-}
-
-.services-spacer {
-    transform: rotate(180deg);
-    position: relative;
-    top: 1.5vw;
-    aspect-ratio: 900/160;
-    width: 100%;
-    contain: content;
-    overflow: visible;
 }
 
 /* MacBook */
