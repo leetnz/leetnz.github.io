@@ -346,6 +346,18 @@ section {
  * Animations
  */
 
+.text-in-right,
+.macbook,
+.circuitboard,
+.text-in-left {
+    visibility: hidden;
+}
+
+.right-in-animation,
+.left-in-animation {
+    visibility: visible;
+}
+
 @media (prefers-reduced-motion: no-preference) {
     .left-in-animation {
         animation-name: left-enter;

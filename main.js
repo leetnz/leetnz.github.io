@@ -238,7 +238,7 @@ const observer = new IntersectionObserver(entries => {
                 entry.target.classList.add('right-in-animation');
             }
             if (entry.target.classList.contains('macbook')) {
-                entry.target.classList.add('macbook-enter');
+                entry.target.classList.add('left-in-animation');
             }
             if (entry.target.classList.contains('circuitboard')) {
                 entry.target.classList.add('left-in-animation');
