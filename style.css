@@ -75,7 +75,7 @@ html:not([data-scroll='0']) header {
     padding-left: 10vw;
     padding-right: 10vw;
     width: 80vw;
-    height: 4em;
+    height: 5em;
 
 
     position: fixed;
@@ -111,7 +111,7 @@ html:not([data-scroll='0']) header {
     color: var(--text-primary);
     font-size: 4rem;
     letter-spacing: 0.1ch;
-    margin-top: -1.0rem;
+    margin-top: -2.0rem;
     margin-left: 2rem;
     line-height: 4rem;
 }
@@ -252,6 +252,11 @@ a:hover {
         font-size: 4vw;
     }
 
+    li {
+        font-size: 4rem;
+        font-size: 4vw;
+    }
+
     p.small {
         font-size: 3rem;
         font-size: 3vw;
@@ -280,6 +285,11 @@ a:hover {
 
 
     p {
+        font-size: 2rem;
+        font-size: 2vw;
+    }
+
+    li {
         font-size: 2rem;
         font-size: 2vw;
     }
@@ -399,135 +409,6 @@ section {
 }
 
 /*
- * City Section
- */
-
-.water {
-    background: var(--waterg2);
-    overflow-y: hidden;
-    min-height: 100vh;
-    height: 65vw;
-}
-
-.city {
-    position: absolute;
-    top: 0;
-    aspect-ratio: 776.25/419.16;
-    pointer-events: none;
-    height: 100%;
-}
-
-.city-spacer {
-    position: absolute;
-    aspect-ratio: 776.25/419.16;
-    height: 100%;
-
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: bottom;
-    background-size: cover;
-    background-attachment: fixed;
-}
-
-#city-sky {
-    position: absolute;
-    top: 0;
-
-    width: 100%;
-    height: 61%;
-    background: var(--skyg1);
-    /* Old browsers */
-    background: -moz-linear-gradient(180deg, var(--skyg1) 0%, var(--skyg2) 90%);
-    /* FF3.6-15 */
-    background: -webkit-linear-gradient(180deg, var(--skyg1) 0%, var(--skyg2) 90%);
-    /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(180deg, var(--skyg1) 0%, var(--skyg2) 90%);
-
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=var(--skyg1), endColorstr=var(--skyg2), GradientType=0);
-    /* IE6-9 */
-    overflow: hidden;
-}
-
-#city-stars {
-    height: 80%;
-    width: 100%;
-}
-
-#city-water {
-    position: absolute;
-    bottom: 0;
-
-    width: 100%;
-    height: 39%;
-    background: var(--waterg2);
-    /* Old browsers */
-    background: -moz-linear-gradient(-180deg, var(--waterg1) 0%, var(--waterg2) 100%);
-    /* FF3.6-15 */
-    background: -webkit-linear-gradient(-180deg, var(--waterg1) 0%, var(--waterg2) 100%);
-    /* Chrome10-25,Safari5.1-6 */
-    background: linear-gradient(-180deg, var(--waterg1) 0%, var(--waterg2) 100%);
-
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=var(--waterg1), endColorstr=var(--waterg2), GradientType=0);
-    /* IE6-9 */
-    overflow: hidden;
-}
-
-#city-layer0,
-#city-layer1,
-#city-layer2 {
-    pointer-events: none;
-}
-
-.path-layer0 {
-    pointer-events: visible;
-    fill: var(--city0-fill);
-    stroke: var(--city0-line);
-    stroke-width: 2;
-    opacity: 0.7;
-}
-
-
-#city-layer0_17 {
-    stroke: var(--city0-fill);
-    fill: var(--city0-fill);
-    opacity: 1;
-}
-
-#city-layer1 path {
-    fill: var(--city1-fill);
-    stroke: var(--city1-line);
-    stroke-width: 1.5;
-    pointer-events: visible;
-    opacity: 0.7;
-}
-
-#city-layer2 path {
-    fill: var(--city2-fill);
-    stroke: var(--city2-line);
-    stroke-width: 1;
-    pointer-events: visible;
-    opacity: 0.8;
-}
-
-.city-layer3 path {
-    fill: var(--city3-fill);
-    opacity: 1;
-    stroke-width: 0;
-}
-
-#city-stars svg {
-    position: relative;
-    height: 10px;
-    width: 10px;
-    top: 0;
-    left: 0;
-    background-repeat: no-repeat;
-    background-position-x: center;
-    background-position-y: center;
-    background-attachment: fixed;
-}
-
-/*
  * Services Section
  */
 
@@ -551,7 +432,7 @@ section {
     background-repeat: no-repeat;
     background-size: cover;
     filter: brightness(0.25);
-    z-index: -1;
+    z-index: -5;
 }
 
 /* MacBook */
@@ -581,6 +462,7 @@ section {
     position: relative;
     margin-top: -8vw;
     width: 100%;
+    min-height: 100vh;
 }
 
 .about::before {
@@ -595,8 +477,8 @@ section {
     background-position: center;
     background-repeat: no-repeat;
     background-size: cover;
-    filter: brightness(0.45);
-    z-index: -5;
+    filter: brightness(0.35);
+    z-index: -4;
 }
 
 
