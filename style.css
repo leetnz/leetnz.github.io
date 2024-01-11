@@ -532,6 +532,14 @@ section {
     padding-top: 5vh
 }
 
+.contact-details {
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+}
+
 .contact-details-container,
 .contact-form-container {
     flex: 1;
